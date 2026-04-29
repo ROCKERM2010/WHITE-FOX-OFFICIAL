@@ -583,22 +583,6 @@
         </div>
       </div>
     </section>
-    
-    <!-- The Origin Section -->
-    <section id="origin-section" class="h-[80vh] relative overflow-hidden bg-[#0A0A0A]">
-      <div id="origin-bg" class="absolute inset-0 w-full h-[120%] bg-cover bg-center" style="background-image: url('./images/wild_fox.jpg'); background-position: center 20%;">
-        <div class="absolute inset-0 bg-black/30"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent opacity-20"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
-      </div>
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-5 z-10">
-        <p class="font-oswald text-[10px] text-white tracking-[0.4em] uppercase mb-6 opacity-80">THE NAMESAKE</p>
-        <h2 class="font-anton text-[clamp(48px,10vw,120px)] text-white uppercase leading-[0.85] mb-8">BUILT FOR<br/>THE WILD.</h2>
-        <div class="w-[60px] h-[1px] bg-white/30 mb-8"></div>
-        <p class="font-cormorant italic font-light text-[22px] md:text-[26px] text-white/90 max-w-[600px]">
-          "We didn't choose the name for its grace. We chose it for its resilience."
-        </p>
-      </div>
     </section>
 
     <!-- Athlete Trust Ticker -->
@@ -1172,17 +1156,6 @@
         stagger: 0.15,
         ease: 'power4.out',
         scrollTrigger: { trigger: '#product-grid', start: 'top 65%' }
-      });
-
-      gsap.to('#origin-bg', {
-        y: '20%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#origin-section',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
       });
 
 
