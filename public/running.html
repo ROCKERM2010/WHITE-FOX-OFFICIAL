@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHITE FOX — Outrun The Wild | Glacier Elite Speed Series</title>
+  <meta name="description" content="The white fox doesn't train. It hunts. Glacier Elite Speed Series — the lightest carbon plate shoe WHITE FOX has ever built.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,400i&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { blue: '#113B5E', 'blue-mid': '#1A5A8C', pale: '#E4F0F5' },
+            text: { primary: '#0A0A0A', muted: '#6B6B6B', faint: '#ADADAD' },
+            section: { dark: '#0A0A0A' },
+            hairline: '#E5E5E5',
+          },
+          fontFamily: {
+            anton: ['Anton', 'sans-serif'],
+            satoshi: ['Satoshi', 'sans-serif'],
+            oswald: ['Oswald', 'sans-serif'],
+            cormorant: ['"Cormorant Garamond"', 'serif'],
+          },
+          transitionTimingFunction: {
+            spring: 'cubic-bezier(0.16,1,0.3,1)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --brand-blue: #113B5E; --brand-blue-mid: #1A5A8C; --brand-pale: #E4F0F5;
+      --text-primary: #0A0A0A; --text-muted: #6B6B6B; --text-faint: #ADADAD;
+      --section-dark: #0A0A0A; --hairline: #E5E5E5;
+      --ease-spring: cubic-bezier(0.16,1,0.3,1);
+    }
+    body { font-family: 'Satoshi', sans-serif; color: var(--text-primary); background: #FFFFFF; overflow-x: hidden; }
+    *:focus-visible { outline: 2px solid #113B5E; outline-offset: 2px; }
+    
+    .btn-pill {
+      border-radius: 9999px; font-family: 'Satoshi', sans-serif; font-weight: 500; font-size: 13px;
+      letter-spacing: 0.08em; text-transform: uppercase; transition: all 250ms var(--ease-spring);
+      display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px;
+    }
+    .btn-pill:hover { transform: translateY(-1px); }
+    .section-pad { padding: clamp(100px, 12vw, 180px) 0; }
+    .premium-divider {
+      width: 48px; height: 1px; background: linear-gradient(90deg, #113B5E 0%, transparent 100%); margin-bottom: 24px;
+    }
+    
+    @keyframes logoFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes loadBar { from { width: 0; } to { width: 240px; } }
+    @keyframes announceTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    
+    #sticky-nav {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-60px);
+      width: calc(100% - 40px); max-width: 920px; border-radius: 9999px; z-index: 50;
+      opacity: 0; pointer-events: none;
+      transition: background 0.3s, backdrop-filter 0.3s, border 0.3s, box-shadow 0.3s, transform 0.4s var(--ease-spring), opacity 0.4s;
+    }
+    #sticky-nav.visible { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    #sticky-nav.glass {
+      background: rgba(8,8,8,0.6); backdrop-filter: blur(32px) saturate(1.8);
+      border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+    #sticky-nav.glass.scrolled-far {
+      background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+    #sticky-nav.glass.scrolled-far .nav-link, #sticky-nav.glass.scrolled-far #search-btn, #sticky-nav.glass.scrolled-far #cart-btn { color: #0A0A0A; }
+    #sticky-nav.glass.scrolled-far #nav-logo-img { filter: none !important; }
+    #sticky-nav.glass.scrolled-far .hamburger-line { background: #0A0A0A; }
+    #sticky-nav.glass.scrolled-far #nav-logo-text { color: #0A0A0A; }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 1px; background-color: var(--brand-blue);
+      transform: scaleX(0); transform-origin: right; transition: transform 0.3s var(--ease-spring);
+    }
+    .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    #hamburger.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    #hamburger.active span:nth-child(2) { opacity: 0; }
+    #hamburger.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 380ms ease; z-index: 9000; }
+    .overlay.open { opacity: 1; pointer-events: all; }
+    
+    #cart-drawer {
+      position: fixed; top: 0; right: 0; height: 100dvh; width: min(440px, 100vw); background: #0C0C0C; border-left: 1px solid rgba(255,255,255,0.06);
+      transform: translateX(100%); transition: transform 380ms var(--ease-spring); z-index: 9100; color: white; display: flex; flex-direction: column;
+    }
+    #cart-drawer.open { transform: translateX(0); }
+
+    #size-sheet {
+      position: fixed; bottom: 0; left: 50%; width: min(520px, 100vw); background: #0C0C0C; border: 1px solid rgba(255,255,255,0.07); border-bottom: none; border-radius: 20px 20px 0 0;
+      transform: translateX(-50%) translateY(110%); transition: transform 380ms var(--ease-spring); z-index: 9200; color: white; padding: 32px 24px;
+    }
+    #size-sheet.open { transform: translateX(-50%) translateY(0); }
+    
+    #search-panel {
+      position: fixed; top: 0; left: 0; right: 0; background: #0C0C0C; transform: translateY(-100%); transition: transform 380ms var(--ease-spring); z-index: 9300; color: white; padding: 40px 20px;
+    }
+    #search-panel.open { transform: translateY(0); }
+    
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .cart-scroll::-webkit-scrollbar { width: 3px; }
+    .cart-scroll::-webkit-scrollbar-track { background: transparent; }
+    .cart-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+
+    /* Fallbacks for missing assets */
+    .hero-fallback { background: #0A0A0A; }
+    .shoe-fallback { width: 100%; height: 280px; background: #F5F5F5; display: flex; align-items: center; justify-content: center; font-family: 'Satoshi', sans-serif; font-size: 14px; color: #ADADAD; font-weight: bold; }
+    .athlete-fallback { background: #1A1A1A; display: flex; align-items: center; justify-content: center; color: #ADADAD; font-family: 'Anton', sans-serif; font-size: 24px; }
+    .bg-tundra-fallback { background: linear-gradient(to bottom, #E4F0F5, #FFFFFF); }
+    .bg-night-fallback { background: linear-gradient(to bottom, #113B5E, #0A0A0A); }
+    .bg-turf-fallback { background: linear-gradient(to bottom, #1A1A1A, #000000); }
+    .video-fallback { background: #111111; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.2); font-family: 'Anton'; font-size: 40px; }
+  </style>
+</head>
+<body class="bg-white text-text-primary antialiased overflow-x-hidden">
+
+  <!-- Preloader -->
+  <div id="preloader" class="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center transition-opacity duration-500" role="status" aria-label="Loading">
+    <img src="./assets/arctic-fox-logo-png-26.webp" alt="WHITE FOX" class="w-[120px] opacity-0" id="preloader-logo" style="animation: logoFadeIn 600ms 200ms forwards;" onerror="this.style.display='none'; document.getElementById('preloader-text-fallback').style.display='block';">
+    <div style="display:none; animation: logoFadeIn 600ms 200ms forwards;" class="font-anton text-4xl tracking-widest text-brand-blue mb-4 opacity-0" id="preloader-text-fallback">WHITE FOX</div>
+    <div class="mt-8 bg-gray-200 h-[2px] w-[240px] relative overflow-hidden">
+      <div id="loading-bar" class="absolute left-0 top-0 h-full bg-brand-blue w-0" style="animation: loadBar 1000ms 400ms forwards;"></div>
+    </div>
+    <div id="loading-text" class="mt-4 font-satoshi text-[11px] text-text-faint uppercase tracking-[0.2em] opacity-0" style="animation: logoFadeIn 600ms 600ms forwards;">Loading Experience</div>
+  </div>
+
+  <!-- SVG Grain -->
+  <svg class="fixed inset-0 w-full h-full opacity-[0.035] pointer-events-none z-[3]" xmlns="http://www.w3.org/2000/svg">
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0 0"/></filter>
+    <rect width="100%" height="100%" filter="url(#grain)"/>
+  </svg>
+
+  <!-- Navbar -->
+  <nav id="sticky-nav" class="glass" role="navigation" aria-label="Main navigation">
+    <div class="flex items-center justify-between h-[52px] md:h-[58px] px-5 md:px-7">
+      <a href="index.html" aria-label="Home" class="flex items-center">
+        <img id="nav-logo-img" src="./assets/arctic-fox-logo-png-26.webp" alt="WHITE FOX" class="h-[32px] md:h-[36px] brightness-0 invert transition-all duration-300" onerror="this.style.display='none'; document.getElementById('nav-logo-text').style.display='block';">
+        <span id="nav-logo-text" class="font-anton text-2xl tracking-wider text-white hidden">WHITE FOX</span>
+      </a>
+      
+      <div class="hidden lg:flex items-center gap-6">
+        <a href="men.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Men</a>
+        <a href="women.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Women</a>
+        <a href="running.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Running</a>
+        <a href="collections.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Collections</a>
+        <a href="stories.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Stories</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-5">
+        <button id="search-btn" aria-label="Search" class="text-white hover:text-brand-blue transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button id="cart-btn" aria-label="Cart" class="text-white hover:text-brand-blue transition-colors relative">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span id="cart-badge" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-brand-blue rounded-full text-[9px] font-bold text-white items-center justify-center" style="display:none">0</span>
+        </button>
+        <a href="#product-grid" class="btn-pill bg-white text-text-primary hover:bg-brand-pale !py-[10px] !px-5 !text-[11px]">Shop Now</a>
+      </div>
+
+      <button id="hamburger" aria-label="Menu" class="md:hidden flex flex-col gap-[4.5px] w-[22px] z-[91]">
+        <span class="hamburger-line w-full h-[1.5px] bg-white transition-transform origin-center"></span>
+        <span class="hamburger-line w-full h-[1.5px] bg-white transition-opacity"></span>
+        <span class="hamburger-line w-full h-[1.5px] bg-white transition-transform origin-center"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-nav-overlay" class="fixed inset-0 bg-brand-blue z-[90] flex flex-col justify-center px-8 translate-y-[-100%] transition-transform duration-500 ease-spring">
+    <div class="flex flex-col gap-6 text-white">
+      <a href="men.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Men</a>
+      <a href="women.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Women</a>
+      <a href="running.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Running</a>
+      <a href="collections.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Collections</a>
+      <a href="stories.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Stories</a>
+    </div>
+  </div>
+
+  <div id="cart-overlay" class="overlay"></div>
+  <div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping bag">
+    <div class="px-6 py-6 border-b border-white/10 flex justify-between items-center">
+      <h2 class="font-anton tracking-wider text-xl">YOUR BAG (<span id="cart-count-header">0</span>)</h2>
+      <button id="close-cart" aria-label="Close cart" class="text-white/60 hover:text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto cart-scroll p-6 flex flex-col gap-6">
+      <div id="cart-empty" class="flex flex-col items-center justify-center h-full text-center opacity-50">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="mb-4"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <p class="font-satoshi mb-1">Your bag is empty</p>
+        <p class="font-satoshi text-sm text-white/50">Add something worth hunting for.</p>
+      </div>
+    </div>
+    <div class="p-6 border-t border-white/10 bg-[#0A0A0A]">
+      <div class="flex justify-between font-satoshi mb-6">
+        <span class="text-white/70">Subtotal</span>
+        <span id="cart-subtotal" class="font-oswald font-bold tracking-wide">₹0</span>
+      </div>
+      <button onclick="alert('Checkout coming soon!\n\nThis is a portfolio demo — no real transactions.')" class="w-full btn-pill bg-brand-blue text-white hover:bg-brand-blue-mid">Checkout</button>
+    </div>
+  </div>
+
+  <div id="size-overlay" class="overlay" style="z-index:9150"></div>
+  <div id="size-sheet">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <h3 id="size-product-name" class="font-anton text-2xl tracking-wide uppercase"></h3>
+        <p id="size-product-color" class="font-satoshi text-sm text-white/60"></p>
+      </div>
+      <button id="close-size" aria-label="Close size sheet" class="text-white/60 hover:text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <p class="font-oswald text-[10px] tracking-[0.2em] text-brand-blue mb-4 uppercase font-bold">Select UK Size</p>
+    <div id="size-grid" class="grid grid-cols-4 gap-2 mb-8"></div>
+    <button id="confirm-size-btn" class="w-full btn-pill bg-white text-text-primary disabled:opacity-30 disabled:pointer-events-none" disabled>Add to Bag</button>
+  </div>
+
+  <div id="search-overlay" class="overlay"></div>
+  <div id="search-panel" role="dialog" aria-modal="true">
+    <div class="flex items-center gap-4 max-w-4xl mx-auto border-b-[1.5px] border-white/15 pb-4 relative">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/50"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="search-input" placeholder="SEARCH FOR SPEED..." class="bg-transparent border-none outline-none text-[clamp(24px,4vw,44px)] font-anton uppercase w-full text-white placeholder-white/20">
+      <button id="close-search" class="absolute right-0 text-white/50 hover:text-white"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div id="search-results" class="max-w-4xl mx-auto mt-8 flex flex-wrap gap-4"></div>
+  </div>
+
+  <!-- Announce Bar -->
+  <section aria-label="Announcements" class="h-[36px] bg-section-dark overflow-hidden flex relative z-10 w-full border-b border-white/10">
+    <div class="flex w-[200%] animate-[announceTicker_30s_linear_infinite] hover:!play-state-paused items-center">
+      <div class="flex items-center whitespace-nowrap px-8 gap-8">
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg> FREE NEXT-DAY DELIVERY ON ORDERS ABOVE ₹3,499</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg> 30-DAY HASSLE-FREE RETURNS</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 100% SATISFACTION GUARANTEE</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> SECURE CHECKOUT · 256-BIT ENCRYPTION</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+      </div>
+      <div class="flex items-center whitespace-nowrap px-8 gap-8">
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg> FREE NEXT-DAY DELIVERY ON ORDERS ABOVE ₹3,499</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg> 30-DAY HASSLE-FREE RETURNS</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 100% SATISFACTION GUARANTEE</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+        <span class="font-satoshi text-[11px] text-white tracking-[0.06em] flex items-center gap-[6px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#113B5E" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> SECURE CHECKOUT · 256-BIT ENCRYPTION</span>
+        <span class="w-[3px] h-[3px] rounded-full bg-white opacity-40"></span>
+      </div>
+    </div>
+  </section>
+
+  <main id="main-content" class="opacity-0 transition-opacity duration-500 pt-[120px] pb-20 bg-white min-h-screen">
+
+  <section class="bg-[#0A0A0A] h-[56px] flex items-center overflow-hidden w-full border-b border-white/10 -mt-[120px] pt-[120px] box-content">
+    <div class="flex w-[200%] animate-[marquee_20s_linear_infinite] whitespace-nowrap text-white/80 font-satoshi text-[12px] uppercase tracking-[0.2em]">
+      <span class="px-8">CARBON PLATE · GLACIER™ FOAM · 176G · 87% ENERGY RETURN · </span>
+      <span class="px-8">CARBON PLATE · GLACIER™ FOAM · 176G · 87% ENERGY RETURN · </span>
+      <span class="px-8">CARBON PLATE · GLACIER™ FOAM · 176G · 87% ENERGY RETURN · </span>
+    </div>
+  </section>
+  <section class="px-[5vw] py-20">
+    <h2 class="font-anton text-[48px] uppercase mb-8">Race Day</h2>
+    <div class="bg-hairline flex flex-wrap gap-[2px]">
+      <!-- 2 products -->
+      ${Array(2).fill(0).map((_, i) => `
+        <article class="product-card bg-white w-full md:w-[calc(50%-1px)] group">
+          <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center"><div class="shoe-fallback">RACE DAY ${i+1}</div></div>
+          <div class="p-7"><h3 class="font-satoshi font-bold text-[19px]">RACE ELITE</h3><button class="add-to-cart-btn btn-pill mt-4 border border-hairline" data-product-id="midnight">+ ADD</button></div>
+        </article>
+      `).join('')}
+    </div>
+  </section>
+  <section class="px-[5vw] py-20 bg-[#F5F5F5]">
+    <h2 class="font-anton text-[48px] uppercase mb-8">Training</h2>
+    <div class="bg-hairline flex flex-wrap gap-[2px]">
+      ${Array(2).fill(0).map((_, i) => `
+        <article class="product-card bg-white w-full md:w-[calc(50%-1px)] group">
+          <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center"><div class="shoe-fallback">TRAINING ${i+1}</div></div>
+          <div class="p-7"><h3 class="font-satoshi font-bold text-[19px]">DAILY TRAINER</h3><button class="add-to-cart-btn btn-pill mt-4 border border-hairline" data-product-id="arctic">+ ADD</button></div>
+        </article>
+      `).join('')}
+    </div>
+  </section>
+
+</main>
+
+  <footer class="bg-[#0A0A0A] overflow-hidden">
+    <div class="border-t border-[#1C1C1C] px-[5vw]" style="padding-top: clamp(72px, 10vw, 140px);">
+      <p class="font-oswald text-[10px] text-brand-blue uppercase tracking-[0.22em] font-bold mb-6">OUTRUN THE WILD — SINCE 1948</p>
+      <h2 class="font-anton text-[clamp(52px,10vw,148px)] text-white uppercase leading-[0.88]">MADE<br/>FOR THE<br/>HUNT.</h2>
+    </div>
+
+    <div class="px-[5vw]" style="padding-top: clamp(60px, 7vw, 96px); margin-bottom: 64px;">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+        <div>
+          <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Shop</h4>
+          <ul class="space-y-3">
+            <li><a href="men.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Men</a></li>
+            <li><a href="women.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Women</a></li>
+            <li><a href="running.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Running</a></li>
+            <li><a href="collections.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Collections</a></li>
+            <li><a href="stories.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Stories</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Company</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">About WHITE FOX</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Careers</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Sustainability</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Press Room</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Investors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Support</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Track Order</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Returns & Exchanges</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Size Guide</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Contact Us</a></li>
+            <li><a href="#" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Follow</h4>
+          <div class="space-y-4">
+            <a href="#" class="flex items-center gap-3 group">
+              <div class="w-8 h-8 rounded-full border border-[#2A2A2A] flex items-center justify-center group-hover:border-brand-blue text-[#5A5A5A] group-hover:text-brand-blue transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </div>
+              <span class="font-satoshi text-[13px] text-[#5A5A5A] group-hover:text-white transition-colors">Instagram</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 group">
+              <div class="w-8 h-8 rounded-full border border-[#2A2A2A] flex items-center justify-center group-hover:border-brand-blue text-[#5A5A5A] group-hover:text-brand-blue transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+              </div>
+              <span class="font-satoshi text-[13px] text-[#5A5A5A] group-hover:text-white transition-colors">YouTube</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 group">
+              <div class="w-8 h-8 rounded-full border border-[#2A2A2A] flex items-center justify-center group-hover:border-brand-blue text-[#5A5A5A] group-hover:text-brand-blue transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.5l9-5.5V5.5L12 0 3 5.5v9.5l9 5.5z"/></svg>
+              </div>
+              <span class="font-satoshi text-[13px] text-[#5A5A5A] group-hover:text-white transition-colors">Strava</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-[#141414] py-7 px-[5vw]">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-6">
+          <span class="font-anton text-[22px] text-white opacity-25">WHITE FOX</span>
+          <div class="hidden md:flex gap-4 font-satoshi text-[12px] text-[#1E1E1E]">
+            <a href="#" class="hover:text-white transition-colors">Terms</a> · 
+            <a href="#" class="hover:text-white transition-colors">Privacy</a> · 
+            <a href="#" class="hover:text-white transition-colors">Cookies</a> · 
+            <a href="#" class="hover:text-white transition-colors">Accessibility</a>
+          </div>
+        </div>
+        <p class="font-satoshi text-[12px] text-[#1E1E1E]">© 2026 WHITE FOX SE · 🇮🇳 India</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    (function() {
+      // 1. Preloader logic
+      setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('opacity-0');
+        const main = document.getElementById('main-content');
+        main.classList.remove('opacity-0');
+        setTimeout(() => preloader.style.display = 'none', 500);
+      }, 1800);
+
+      // 2. State & Data
+      const PRODUCTS = {
+        'midnight': { id: 'midnight', name: 'GLACIER ELITE SPEED', color: 'Midnight Aurora', price: 14999, img: './images/shoe_midnight_aurora.png' },
+        'arctic': { id: 'arctic', name: 'GLACIER ELITE SPEED', color: 'Arctic White', price: 14999, img: './images/shoe_arctic_white.png' },
+        'tundra': { id: 'tundra', name: 'GLACIER ELITE SPEED', color: 'Tundra Frost', price: 14999, img: './images/shoe_tundra_frost.png' }
+      };
+      const SIZES = ['UK 5','UK 6','UK 7','UK 8','UK 9','UK 10','UK 11','UK 12'];
+      let cart = [];
+      let pendingProductId = null;
+      let selectedSize = null;
+
+      // 3. UI Elements
+      const nav = document.getElementById('sticky-nav');
+      const hamburger = document.getElementById('hamburger');
+      const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+      const cartBtn = document.getElementById('cart-btn');
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartOverlay = document.getElementById('cart-overlay');
+      const closeCartBtn = document.getElementById('close-cart');
+      const sizeSheet = document.getElementById('size-sheet');
+      const sizeOverlay = document.getElementById('size-overlay');
+      const closeSizeBtn = document.getElementById('close-size');
+      const searchBtn = document.getElementById('search-btn');
+      const searchPanel = document.getElementById('search-panel');
+      const searchOverlay = document.getElementById('search-overlay');
+      const closeSearchBtn = document.getElementById('close-search');
+
+      // 4. Mobile Nav Toggle
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileNavOverlay.classList.toggle('translate-y-[-100%]');
+        document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
+        if(hamburger.classList.contains('active')) {
+          gsap.to('.mobile-link', { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+        } else {
+          gsap.set('.mobile-link', { opacity: 0, y: 32 });
+        }
+      });
+
+      // 5. Cart Logic
+      function formatPrice(num) { return '₹' + num.toLocaleString('en-IN'); }
+      
+      function renderCart() {
+        const badge = document.getElementById('cart-badge');
+        const headerCount = document.getElementById('cart-count-header');
+        const itemsContainer = document.getElementById('cart-items');
+        const subtotalEl = document.getElementById('cart-subtotal');
+        
+        const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        
+        badge.style.display = totalQty > 0 ? 'flex' : 'none';
+        badge.innerText = totalQty;
+        headerCount.innerText = totalQty;
+        subtotalEl.innerText = formatPrice(subtotal);
+
+        if (cart.length === 0) {
+          itemsContainer.innerHTML = `
+            <div id="cart-empty" class="flex flex-col items-center justify-center h-full text-center opacity-50">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="mb-4"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              <p class="font-satoshi mb-1">Your bag is empty</p>
+              <p class="font-satoshi text-sm text-white/50">Add something worth hunting for.</p>
+            </div>`;
+          return;
+        }
+
+        itemsContainer.innerHTML = cart.map(item => `
+          <div class="flex gap-4 w-full">
+            <div class="w-[84px] h-[84px] bg-[#1A1A1A] flex items-center justify-center shrink-0">
+              <img src="${item.img}" class="w-[80%]" alt="${item.name}" onerror="this.style.display='none'">
+            </div>
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h4 class="font-satoshi font-bold text-[14px] leading-tight pr-2">${item.name}</h4>
+                  <button onclick="window.removeFromCart('${item.id}')" class="text-white/40 hover:text-white shrink-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <p class="font-satoshi text-[12px] text-white/50 mt-1">${item.color} · ${item.size}</p>
+              </div>
+              <div class="flex justify-between items-center mt-2">
+                <div class="flex items-center gap-3">
+                  <button onclick="window.changeQty('${item.id}', -1)" class="w-[26px] h-[26px] rounded-full border border-white/20 flex items-center justify-center hover:bg-brand-blue hover:border-brand-blue transition-colors text-white/80"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                  <span class="font-satoshi text-[13px] w-3 text-center">${item.qty}</span>
+                  <button onclick="window.changeQty('${item.id}', 1)" class="w-[26px] h-[26px] rounded-full border border-white/20 flex items-center justify-center hover:bg-brand-blue hover:border-brand-blue transition-colors text-white/80"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                </div>
+                <span class="font-oswald font-bold">${formatPrice(item.price)}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      window.addToCart = function(productId, size) {
+        const prod = PRODUCTS[productId];
+        const id = productId + '_' + size.replace(' ', '');
+        const existing = cart.find(i => i.id === id);
+        if (existing) existing.qty += 1;
+        else cart.push({ id, productId, name: prod.name, color: prod.color, price: prod.price, img: prod.img, size, qty: 1 });
+        renderCart();
+        openCart();
+      };
+      window.removeFromCart = function(itemId) { cart = cart.filter(i => i.id !== itemId); renderCart(); };
+      window.changeQty = function(itemId, delta) {
+        const item = cart.find(i => i.id === itemId);
+        if (item) {
+          item.qty += delta;
+          if (item.qty <= 0) window.removeFromCart(itemId);
+          else renderCart();
+        }
+      };
+
+      const openCart = () => { cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); document.body.style.overflow='hidden'; };
+      const closeCart = () => { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); document.body.style.overflow=''; };
+      cartBtn.addEventListener('click', openCart);
+      closeCartBtn.addEventListener('click', closeCart);
+      cartOverlay.addEventListener('click', closeCart);
+
+      // 6. Size Sheet Logic
+      const openSizeSheet = (productId) => {
+        pendingProductId = productId;
+        selectedSize = null;
+        const prod = PRODUCTS[productId];
+        document.getElementById('size-product-name').innerText = prod.name;
+        document.getElementById('size-product-color').innerText = prod.color;
+        
+        const grid = document.getElementById('size-grid');
+        grid.innerHTML = SIZES.map(s => `<button class="size-btn border border-white/20 rounded-lg py-3 font-satoshi text-[13px] hover:border-brand-blue transition-colors" data-size="${s}">${s}</button>`).join('');
+        
+        document.querySelectorAll('.size-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('bg-brand-blue', 'border-brand-blue'));
+            this.classList.add('bg-brand-blue', 'border-brand-blue');
+            selectedSize = this.dataset.size;
+            document.getElementById('confirm-size-btn').disabled = false;
+          });
+        });
+        document.getElementById('confirm-size-btn').disabled = true;
+        sizeSheet.classList.add('open'); sizeOverlay.classList.add('open'); document.body.style.overflow='hidden';
+      };
+      const closeSizeSheet = () => { sizeSheet.classList.remove('open'); sizeOverlay.classList.remove('open'); if(!cartDrawer.classList.contains('open')) document.body.style.overflow=''; };
+      
+      document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openSizeSheet(btn.dataset.productId); });
+      });
+      document.getElementById('confirm-size-btn').addEventListener('click', () => {
+        if(pendingProductId && selectedSize) { closeSizeSheet(); window.addToCart(pendingProductId, selectedSize); }
+      });
+      closeSizeBtn.addEventListener('click', closeSizeSheet);
+      sizeOverlay.addEventListener('click', closeSizeSheet);
+
+      // 7. Search Logic
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      const openSearch = () => { searchPanel.classList.add('open'); searchOverlay.classList.add('open'); document.body.style.overflow='hidden'; searchInput.focus(); };
+      const closeSearch = () => { searchPanel.classList.remove('open'); searchOverlay.classList.remove('open'); document.body.style.overflow=''; };
+      searchBtn.addEventListener('click', openSearch);
+      closeSearchBtn.addEventListener('click', closeSearch);
+      searchOverlay.addEventListener('click', closeSearch);
+      
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        if(!query) { searchResults.innerHTML = ''; return; }
+        const matched = Object.values(PRODUCTS).filter(p => p.name.toLowerCase().includes(query) || p.color.toLowerCase().includes(query));
+        searchResults.innerHTML = matched.map(p => `
+          <div class="flex items-center gap-4 bg-[#1A1A1A] p-3 w-[calc(50%-8px)] rounded hover:bg-[#222] cursor-pointer" onclick="document.getElementById('close-search').click(); window.openSizeSheet('${p.id}')">
+            <div class="w-[52px] h-[52px] bg-[#0A0A0A] flex items-center justify-center shrink-0"><img src="${p.img}" class="w-[80%]" onerror="this.style.display='none'"></div>
+            <div class="flex-1">
+              <h4 class="font-satoshi font-bold text-[14px] leading-tight mb-1">${p.name}</h4>
+              <p class="font-satoshi text-[12px] text-white/50">${p.color}</p>
+            </div>
+            <span class="font-oswald text-[10px] text-brand-blue font-bold tracking-widest uppercase px-3">+ ADD</span>
+          </div>
+        `).join('');
+      });
+
+      // Escape key global
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { closeCart(); closeSizeSheet(); closeSearch(); hamburger.classList.remove('active'); mobileNavOverlay.classList.add('translate-y-[-100%]'); }
+      });
+
+      // 8. GSAP Animations
+      gsap.registerPlugin(ScrollTrigger);
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Nav bar visibility logic
+      ScrollTrigger.create({
+        trigger: '#hero-canvas-section',
+        start: 'top top', end: 'bottom top',
+        onUpdate: (self) => {
+          if (self.progress > 0.3) nav.classList.add('visible');
+          if (self.progress >= 1) nav.classList.add('scrolled-far');
+          else nav.classList.remove('scrolled-far');
+        }
+      });
+
+      // Canvas scrubbing
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas.getContext('2d');
+      const frameCount = 173;
+      const images = [];
+      const heroObj = { frame: 0 };
+      let framesLoaded = 0;
+
+      const drawFrame = (n) => {
+        if (!images[n] || !images[n].complete || images[n].naturalWidth === 0) return;
+        const img = images[n];
+        // resize canvas
+        canvas.width = window.innerWidth * window.devicePixelRatio;
+        canvas.height = window.innerHeight * window.devicePixelRatio;
+        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+        const x = (canvas.width / 2) - (img.width / 2) * scale;
+        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        ctx.fillStyle = "#0A0A0A"; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+      };
+
+      const preloadFrames = () => {
+        for (let i = 1; i <= frameCount; i++) {
+          const img = new Image();
+          images[i - 1] = img;
+          const numStr = i.toString().padStart(3, '0');
+          img.onload = function() {
+            framesLoaded++;
+            if (i === 1) drawFrame(0);
+          };
+          img.onerror = function() { framesLoaded++; };
+          img.src = `./assets/frames/ezgif-frame-${numStr}.jpg`;
+        }
+      };
+      
+      preloadFrames();
+      window.addEventListener('resize', () => drawFrame(Math.round(heroObj.frame)));
+
+      if (!isReduced) {
+        // Hero Scrubbing
+        gsap.to(heroObj, {
+          frame: frameCount - 1,
+          snap: 'frame',
+          ease: 'none',
+          scrollTrigger: { trigger: '#hero-canvas-section', start: 'top 36px', end: 'bottom bottom', scrub: true },
+          onUpdate: () => drawFrame(Math.round(heroObj.frame))
+        });
+
+        // Hero Text Overlays
+        gsap.to('.hero-word', { opacity: 1, y: 0, ease: 'power3.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -20%', end: 'top -35%', scrub: true } });
+        gsap.to('.hero-word-right', { opacity: 1, y: 0, ease: 'power3.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -25%', end: 'top -40%', scrub: true } });
+        gsap.to('#hero-brand-label', { opacity: 1, ease: 'power1.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -45%', end: 'top -60%', scrub: true } });
+        gsap.to('#hero-speed-stat', { opacity: 1, ease: 'power1.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -45%', end: 'top -60%', scrub: true } });
+
+        // Content animations
+        gsap.to('.word', { opacity: 1, y: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#product-intro', start: 'top 60%' } });
+        gsap.from('.product-card', { opacity: 0, y: 40, stagger: 0.14, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: '#product-grid', start: 'top 75%' } });
+        
+        // Parallax
+        gsap.to('#forest-bg', { backgroundPositionY: '70%', ease: 'none', scrollTrigger: { trigger: '#forest-section', start: 'top bottom', end: 'bottom top', scrub: true } });
+        gsap.from('#forest-content > *', { opacity: 0, y: 30, stagger: 0.15, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#forest-section', start: 'top 60%' } });
+        
+        gsap.from('#snarl-copy > div > *', { opacity: 0, x: 30, stagger: 0.1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#snarl-section', start: 'top 60%' } });
+        
+        gsap.to('#jungle-bg', { backgroundPositionY: '70%', ease: 'none', scrollTrigger: { trigger: '#jungle-section', start: 'top bottom', end: 'bottom top', scrub: true } });
+        gsap.from('#jungle-content > *', { opacity: 0, y: 30, stagger: 0.15, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#jungle-section', start: 'top 60%' } });
+
+        gsap.from('.essentials-card', { opacity: 0, y: 48, stagger: 0.18, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: '#essentials', start: 'top 70%' } });
+
+        // Counters
+        ScrollTrigger.create({
+          trigger: '#sustainability', start: 'top 80%', once: true,
+          onEnter: () => {
+            document.querySelectorAll('.counter').forEach(counter => {
+              const target = parseInt(counter.dataset.target);
+              const suffix = counter.dataset.suffix || '';
+              let start = 0;
+              const duration = 1400; const startTime = performance.now();
+              const update = (t) => {
+                const elapsed = t - startTime;
+                if(elapsed < duration) {
+                  // cubic ease-out
+                  const p = elapsed / duration; const ease = 1 - Math.pow(1 - p, 3);
+                  counter.innerText = Math.floor(ease * target) + suffix;
+                  requestAnimationFrame(update);
+                } else { counter.innerText = target + suffix; }
+              };
+              requestAnimationFrame(update);
+            });
+          }
+        });
+
+        gsap.from('#email-section > div > *', { opacity: 0, y: 24, stagger: 0.1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#email-section', start: 'top 70%' } });
+      } else {
+        // Fallback for reduced motion
+        setTimeout(() => { nav.classList.add('visible'); drawFrame(0); document.querySelector('.hero-word').style.opacity = 1; document.querySelector('.hero-word').style.transform = 'none'; document.querySelector('.hero-word-right').style.opacity = 1; document.querySelector('.hero-word-right').style.transform = 'none'; }, 2000);
+        document.querySelectorAll('.word').forEach(w => { w.style.opacity = 1; w.style.transform = 'none'; });
+      }
+    })();
+  </script>
+</body>
+</html>
