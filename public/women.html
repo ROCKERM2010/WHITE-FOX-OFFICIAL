@@ -181,6 +181,12 @@
   </nav>
 
   <div id="mobile-nav-overlay" class="fixed inset-0 bg-brand-blue z-[90] flex flex-col justify-center px-8 translate-y-[-100%] transition-transform duration-500 ease-spring">
+    <button id="close-mobile-nav" class="absolute top-8 right-8 text-white/80 hover:text-white transition-colors" aria-label="Close menu">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
     <div class="flex flex-col gap-6 text-white">
       <a href="men.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Men</a>
       <a href="women.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Women</a>
@@ -554,17 +560,26 @@
       const searchOverlay = document.getElementById('search-overlay');
       const closeSearchBtn = document.getElementById('close-search');
 
+      const closeMobileNav = document.getElementById('close-mobile-nav');
+
       // 4. Mobile Nav Toggle
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileNavOverlay.classList.toggle('translate-y-[-100%]');
-        document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-        if(hamburger.classList.contains('active')) {
-          gsap.to('.mobile-link', { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out', delay: 0.2 });
-        } else {
+      const toggleMenu = (forceClose = false) => {
+        const isActive = forceClose ? true : hamburger.classList.contains('active');
+        if (forceClose || isActive) {
+          hamburger.classList.remove('active');
+          mobileNavOverlay.classList.add('translate-y-[-100%]');
+          document.body.style.overflow = '';
           gsap.set('.mobile-link', { opacity: 0, y: 32 });
+        } else {
+          hamburger.classList.add('active');
+          mobileNavOverlay.classList.remove('translate-y-[-100%]');
+          document.body.style.overflow = 'hidden';
+          gsap.to('.mobile-link', { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out', delay: 0.2 });
         }
-      });
+      };
+
+      hamburger.addEventListener('click', () => toggleMenu());
+      closeMobileNav.addEventListener('click', () => toggleMenu(true));
 
       // 5. Cart Logic
       function formatPrice(num) { return '₹' + num.toLocaleString('en-IN'); }
