@@ -264,15 +264,25 @@
 
   <main id="main-content" class="opacity-0 transition-opacity duration-500 pt-[120px] pb-20 bg-white min-h-screen">
 
-  <section class="px-[5vw] py-20 text-center bg-[#0A0A0A] -mt-[120px] pt-[200px] pb-32 relative overflow-hidden" style="background-image: url('./images/women_hunt_bg.png'); background-size: cover; background-position: center;">
+  <section class="px-[5vw] py-20 bg-[#0A0A0A] -mt-[120px] pt-[200px] pb-32 relative overflow-hidden min-h-[550px] flex items-center justify-start" style="background-image: url('./images/women_hunt_bg.png'); background-size: cover; background-position: center;">
     <div class="absolute inset-0 bg-black/60 z-0"></div>
-    <div class="relative z-10">
+    <div class="relative z-10 max-w-3xl text-left">
       <p class="font-oswald text-[11px] text-brand-blue uppercase tracking-[0.25em] mb-4 font-bold">WOMEN'S COLLECTION</p>
-      <h1 class="font-anton text-[clamp(48px,8vw,96px)] text-white uppercase leading-[0.9] tracking-wide">MADE FOR<br/>CHAMPIONS</h1>
+      <h1 class="font-anton text-[clamp(48px,8vw,96px)] text-white uppercase leading-[0.9] tracking-wide mb-6">SHE DOESN'T<br/>FOLLOW.<br/>SHE LEADS.</h1>
+      <p class="font-satoshi text-[16px] text-white/80 leading-[1.6] max-w-[550px] mb-8">Performance running shoes refined for the female foot. Lighter. More responsive. Designed by women, for women.</p>
+      <a href="#product-grid" class="btn-pill inline-block bg-[#1E5624] text-white hover:bg-[#153e1a] tracking-wide font-bold transition-all px-8 py-3.5">SHOP WOMEN'S →</a>
     </div>
   </section>
-  <section class="bg-hairline flex flex-wrap gap-[2px]">
-    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+  <div class="bg-white border-b border-hairline py-6 px-[5vw] flex flex-wrap justify-center gap-2 relative z-20">
+    <button onclick="filterCategory('all')" class="category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-black text-white border border-black hover:opacity-85 transition-all">All</button>
+    <button onclick="filterCategory('running')" class="category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-white text-black border border-hairline hover:bg-gray-50 hover:border-black transition-all">Running</button>
+    <button onclick="filterCategory('training')" class="category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-white text-black border border-hairline hover:bg-gray-50 hover:border-black transition-all">Training</button>
+    <button onclick="filterCategory('racing')" class="category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-white text-black border border-hairline hover:bg-gray-50 hover:border-black transition-all">Racing</button>
+    <button onclick="filterCategory('trail')" class="category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-white text-black border border-hairline hover:bg-gray-50 hover:border-black transition-all">Trail</button>
+    <button onclick="filterCategory('lifestyle')" class="category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-white text-black border border-hairline hover:bg-gray-50 hover:border-black transition-all">Lifestyle</button>
+  </div>
+  <section id="product-grid" class="bg-hairline flex flex-wrap gap-[2px]">
+    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group" data-category="running">
       <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
         <img src="./images/shoe_velocity.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="VELOCITY KINETIC" onerror="this.outerHTML='<div class=\'shoe-fallback\'>VELOCITY KINETIC</div>'">
       </div>
@@ -286,7 +296,7 @@
         </div>
       </div>
     </article>
-    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group" data-category="training">
       <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
         <img src="./images/shoe_pulse.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="DESERT STRIKE HIGH" onerror="this.outerHTML='<div class=\'shoe-fallback\'>DESERT STRIKE HIGH</div>'">
       </div>
@@ -300,7 +310,7 @@
         </div>
       </div>
     </article>
-    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group" data-category="running">
       <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
         <img src="./images/shoe_detailed.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="AERO-WEAVE STRATUS" onerror="this.outerHTML='<div class=\'shoe-fallback\'>AERO-WEAVE STRATUS</div>'">
       </div>
@@ -314,7 +324,7 @@
         </div>
       </div>
     </article>
-    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group" data-category="racing">
       <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
         <img src="./images/shoe_opulent.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="AURA LUXE RUNNER" onerror="this.outerHTML='<div class=\'shoe-fallback\'>AURA LUXE RUNNER</div>'">
       </div>
@@ -328,7 +338,7 @@
         </div>
       </div>
     </article>
-    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+    <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group" data-category="lifestyle">
       <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
         <img src="./images/shoe_eclipse.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="CRIMSON ECLIPSE SHIFT" onerror="this.outerHTML='<div class=\'shoe-fallback\'>CRIMSON ECLIPSE SHIFT</div>'">
       </div>
@@ -508,6 +518,24 @@
         const savedCart = localStorage.getItem('white_fox_cart');
         if (savedCart) cart = JSON.parse(savedCart);
       } catch (e) {}
+      window.filterCategory = (cat) => {
+        const cards = document.querySelectorAll('#product-grid .product-card');
+        cards.forEach(card => {
+          if (cat === 'all' || card.getAttribute('data-category') === cat) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        const buttons = document.querySelectorAll('.category-btn');
+        buttons.forEach(btn => {
+          if (btn.innerText.toLowerCase() === cat.toLowerCase() || (cat === 'all' && btn.innerText.toLowerCase() === 'all')) {
+            btn.className = "category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-black text-white border border-black hover:opacity-85 transition-all";
+          } else {
+            btn.className = "category-btn px-6 py-2.5 rounded-full font-satoshi font-bold text-xs uppercase tracking-wider bg-white text-black border border-hairline hover:bg-gray-50 hover:border-black transition-all";
+          }
+        });
+      };
       let pendingProductId = null;
       let selectedSize = null;
 
