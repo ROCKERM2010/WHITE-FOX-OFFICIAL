@@ -281,6 +281,34 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    #luxurious-apex-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      width: min(520px, 100vw);
+      background: rgba(12, 12, 12, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-bottom: none;
+      border-radius: 24px 24px 0 0;
+      transform: translateX(-50%) translateY(110%);
+      transition: transform 450ms cubic-bezier(0.19, 1, 0.22, 1);
+      z-index: 9200;
+      color: white;
+      padding: 36px 28px;
+      box-shadow: 0 -12px 64px rgba(0, 0, 0, 0.7), 0 0 48px rgba(255, 255, 255, 0.03);
+    }
+
+    #luxurious-apex-sheet.open {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #luxurious-apex-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
     #search-panel {
       position: fixed;
       top: 0;
@@ -610,6 +638,33 @@
     <button id="confirm-size-btn"
       class="w-full btn-pill bg-white text-text-primary disabled:opacity-30 disabled:pointer-events-none" disabled>Add
       to Bag</button>
+  </div>
+
+  <div id="luxurious-apex-overlay" class="overlay" style="z-index:9150"></div>
+  <div id="luxurious-apex-sheet">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <span class="font-oswald text-[10px] tracking-[0.4em] text-brand-blue mb-2 uppercase font-bold block">SPECIAL ACQUISITION PROTOCOL</span>
+        <h3 class="font-anton text-3xl tracking-wide uppercase text-white leading-none">ARCTIC FOX APEX ELITE</h3>
+        <p class="font-satoshi text-sm text-white/50 mt-1.5">Glacier White / Platinum</p>
+      </div>
+      <button onclick="window.closeLuxuriousApexSizeSheet()" aria-label="Close Apex size sheet" class="text-white/40 hover:text-white transition-colors duration-300">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Symmetrical Line separator -->
+    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent mb-6"></div>
+
+    <p class="font-oswald text-[11px] tracking-[0.25em] text-white/80 mb-5 uppercase font-bold text-center">SELECT SIZE REQUIREMENT</p>
+    <div id="luxurious-size-grid" class="grid grid-cols-4 gap-3 mb-8"></div>
+    <button id="luxurious-confirm-btn" onclick="window.confirmLuxuriousApexSize()"
+      class="w-full btn-pill bg-white text-black hover:bg-brand-blue hover:text-white transition-all duration-500 disabled:opacity-20 disabled:pointer-events-none font-bold tracking-widest text-[13px] uppercase !py-4.5" disabled>
+      CONFIRM ACQUISITION — ₹22,999
+    </button>
   </div>
 
   <div id="search-overlay" class="overlay"></div>
@@ -1410,12 +1465,12 @@
           </p>
 
           <div class="flex flex-wrap items-center justify-center gap-8 opacity-0 translate-y-8 zenith-reveal">
-            <a href="#product-grid" class="btn-pill bg-white text-black hover:bg-brand-blue hover:text-white !py-5 !px-12 text-[15px] font-bold tracking-wider group flex items-center gap-4 transition-all duration-500">
+            <button onclick="window.openLuxuriousApexSizeSheet()" class="btn-pill bg-white text-black hover:bg-brand-blue hover:text-white !py-5 !px-12 text-[15px] font-bold tracking-wider group flex items-center gap-4 transition-all duration-500 cursor-pointer">
               OWN THE PINNACLE — ₹22,999
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-2 transition-transform">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
-            </a>
+            </button>
             <a href="#" class="font-oswald text-[12px] text-white/40 hover:text-white tracking-[0.3em] uppercase transition-colors border-b border-white/10 pb-1">
               DISSECT TECHNOLOGY →
             </a>
@@ -2458,6 +2513,40 @@
           sizeSheet.classList.add('open'); sizeOverlay.classList.add('open'); document.body.style.overflow = 'hidden';
         };
         const closeSizeSheet = () => { sizeSheet.classList.remove('open'); sizeOverlay.classList.remove('open'); if (!cartDrawer.classList.contains('open')) document.body.style.overflow = ''; };
+
+        let luxuriousSizeSelected = null;
+        window.openLuxuriousApexSizeSheet = () => {
+          luxuriousSizeSelected = null;
+          const grid = document.getElementById('luxurious-size-grid');
+          grid.innerHTML = SIZES.map(s => `<button class="luxurious-size-btn border border-white/20 rounded-lg py-3 font-satoshi text-[14px] hover:border-brand-blue hover:text-white transition-colors uppercase tracking-wider font-bold" data-size="${s}">${s}</button>`).join('');
+          document.querySelectorAll('.luxurious-size-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              document.querySelectorAll('.luxurious-size-btn').forEach(b => b.classList.remove('bg-brand-blue', 'border-brand-blue', 'text-white'));
+              this.classList.add('bg-brand-blue', 'border-brand-blue', 'text-white');
+              luxuriousSizeSelected = this.dataset.size;
+              document.getElementById('luxurious-confirm-btn').disabled = false;
+            });
+          });
+          document.getElementById('luxurious-confirm-btn').disabled = true;
+          document.getElementById('luxurious-apex-sheet').classList.add('open');
+          document.getElementById('luxurious-apex-overlay').classList.add('open');
+          document.body.style.overflow = 'hidden';
+        };
+
+        window.closeLuxuriousApexSizeSheet = () => {
+          document.getElementById('luxurious-apex-sheet').classList.remove('open');
+          document.getElementById('luxurious-apex-overlay').classList.remove('open');
+          if (!cartDrawer.classList.contains('open')) document.body.style.overflow = '';
+        };
+
+        window.confirmLuxuriousApexSize = () => {
+          if (luxuriousSizeSelected) {
+            window.closeLuxuriousApexSizeSheet();
+            window.addToCart('apex', luxuriousSizeSelected);
+          }
+        };
+
+        document.getElementById('luxurious-apex-overlay').addEventListener('click', window.closeLuxuriousApexSizeSheet);
 
         document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
           btn.addEventListener('click', (e) => { e.preventDefault(); openSizeSheet(btn.dataset.productId); });
