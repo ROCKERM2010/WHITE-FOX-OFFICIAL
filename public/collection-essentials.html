@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHITE FOX — Essentials Core Collection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-blue': '#113B5E',
+            'brand-blue-mid': '#1E527B',
+            'brand-blue-light': '#D4E2EC',
+            'text-primary': '#0A0A0A',
+            'text-muted': '#5E5E5E',
+            'text-faint': '#8C8C8C',
+            'hairline': '#EBEBEB',
+            'section-dark': '#0A0A0A'
+          },
+          fontFamily: {
+            anton: ['Anton', 'sans-serif'],
+            oswald: ['Oswald', 'sans-serif'],
+            satoshi: ['Satoshi', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Satoshi';
+      src: url('https://cdn.fontshare.com/wf/TTCH7S6PFRFFO6UCOCDVPCCHJWYOPXNX/YDVXPO7UQLK6E2H75W537754S5DOHFKK/DNLKIPXKKM56EDDDNYXYE6H5NYD7U7WY.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Satoshi';
+      src: url('https://cdn.fontshare.com/wf/K6GZX7S54G7K3LFF63X3WGA63W64RZZ3/H5L7WQLK4P4K7G5DOW43Z5E5S5DOHFKK/3NLKIPXKKM56EDDDNYXYE6H5NYD7U7WY.woff2') format('woff2');
+      font-weight: 500; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Satoshi';
+      src: url('https://cdn.fontshare.com/wf/O47VPLU5S5FJQWNXCHMVO64RJJT4D6Z3/U7H5HLLK4P4K7G5DOW43Z5E5S5DOHFKK/4NLKIPXKKM56EDDDNYXYE6H5NYD7U7WY.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    :root { --ease-spring: cubic-bezier(0.2, 1, 0.2, 1); }
+    .btn-pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 32px; border-radius: 9999px; font-family: 'Oswald', sans-serif;
+      font-size: 11px; font-weight: bold; letter-spacing: 0.18em; text-transform: uppercase;
+      transition: all 0.3s var(--ease-spring);
+    }
+    .cart-scroll::-webkit-scrollbar { width: 4px; }
+    .cart-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+    
+    #sticky-nav {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(0);
+      width: calc(100% - 40px); max-width: 920px; border-radius: 9999px; z-index: 50;
+      transition: background 0.3s, backdrop-filter 0.3s, border 0.3s, box-shadow 0.3s;
+    }
+    #sticky-nav.glass {
+      background: rgba(8, 8, 8, 0.6); backdrop-filter: blur(32px) saturate(1.8);
+      border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    }
+    #sticky-nav.glass.scrolled-far {
+      background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    }
+    #sticky-nav.glass.scrolled-far .nav-link,
+    #sticky-nav.glass.scrolled-far #search-btn,
+    #sticky-nav.glass.scrolled-far #cart-btn { color: #0A0A0A; }
+    #sticky-nav.glass.scrolled-far #nav-logo-text { color: #0A0A0A; }
+    #sticky-nav.glass.scrolled-far .hamburger-line { background-color: #0A0A0A; }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 1px;
+      background-color: var(--brand-blue); transform: scaleX(0); transform-origin: right;
+      transition: transform 0.3s var(--ease-spring);
+    }
+    .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+    
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(5px);
+      opacity: 0; pointer-events: none; transition: opacity 380ms ease; z-index: 9000;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    #cart-drawer {
+      position: fixed; top: 0; right: 0; height: 100dvh; width: min(440px, 100vw);
+      background: #0C0C0C; border-left: 1px solid rgba(255, 255, 255, 0.06);
+      transform: translateX(100%); transition: transform 380ms var(--ease-spring);
+      z-index: 9100; color: white; display: flex; flex-direction: column;
+    }
+    #cart-drawer.open { transform: translateX(0); }
+
+    #size-sheet {
+      position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%);
+      width: min(480px, 100vw); background: #0E0E0E; border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px 20px 0 0; padding: 32px; z-index: 9200; color: white;
+      transition: transform 420ms var(--ease-spring);
+    }
+    #size-sheet.open { transform: translate(-50%, 0); }
+
+    #search-panel {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 420px;
+      background: #0C0C0C; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 9100; padding: 48px 5vw; transform: translateY(-100%);
+      transition: transform 420ms var(--ease-spring); color: white;
+    }
+    #search-panel.open { transform: translateY(0); }
+
+    @keyframes logoFadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes loadBar {
+      to { width: 100%; }
+    }
+    @keyframes announceTicker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body class="bg-white text-text-primary antialiased overflow-x-hidden">
+
+  <!-- Preloader -->
+  <div id="preloader" class="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center transition-opacity duration-500" role="status" aria-label="Loading">
+    <div style="animation: logoFadeIn 600ms 200ms forwards;" class="font-anton text-4xl tracking-widest text-brand-blue mb-4 opacity-0" id="preloader-text-fallback">WHITE FOX</div>
+    <div class="mt-8 bg-gray-200 h-[2px] w-[240px] relative overflow-hidden">
+      <div id="loading-bar" class="absolute left-0 top-0 h-full bg-brand-blue w-0" style="animation: loadBar 1000ms 400ms forwards;"></div>
+    </div>
+    <div id="loading-text" class="mt-4 font-satoshi text-[11px] text-text-faint uppercase tracking-[0.2em] opacity-0" style="animation: logoFadeIn 600ms 600ms forwards;">Loading Experience</div>
+  </div>
+
+  <!-- SVG Grain -->
+  <svg class="fixed inset-0 w-full h-full opacity-[0.035] pointer-events-none z-[3]" xmlns="http://www.w3.org/2000/svg">
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0 0"/></filter>
+    <rect width="100%" height="100%" filter="url(#grain)"/>
+  </svg>
+
+  <!-- Navbar -->
+  <nav id="sticky-nav" class="glass visible" role="navigation" aria-label="Main navigation">
+    <div class="flex items-center justify-between h-[52px] md:h-[58px] px-5 md:px-7">
+      <a href="index.html" aria-label="Home" class="flex items-center">
+        <span id="nav-logo-text" class="font-anton text-2xl tracking-wider text-white">WHITE FOX</span>
+      </a>
+      
+      <div class="hidden lg:flex items-center gap-6">
+        <a href="men.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Men</a>
+        <a href="women.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Women</a>
+        <a href="running.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Running</a>
+        <a href="collections.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Collections</a>
+        <a href="stories.html" class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Stories</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-5">
+        <button id="search-btn" aria-label="Search" class="text-white hover:text-brand-blue transition-colors"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+        <button id="cart-btn" aria-label="Cart" class="flex items-center gap-1 text-white hover:text-brand-blue transition-colors relative"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span id="cart-count" class="font-anton text-[10px] tracking-wide bg-brand-blue text-white rounded-full w-4 h-4 flex items-center justify-center absolute -top-2 -right-2">0</span></button>
+      </div>
+
+      <button id="hamburger" aria-label="Menu" class="lg:hidden flex flex-col justify-between w-5 h-[12px] relative z-[100]">
+        <span class="hamburger-line w-full h-[1.5px] bg-white transition-all duration-300"></span>
+        <span class="hamburger-line w-full h-[1.5px] bg-white transition-all duration-300"></span>
+        <span class="hamburger-line w-full h-[1.5px] bg-white transition-all duration-300"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-nav-overlay" class="fixed inset-0 bg-brand-blue z-[90] flex flex-col justify-center px-8 translate-y-[-100%] transition-transform duration-500 ease-spring">
+    <div class="flex flex-col gap-6 text-white">
+      <a href="men.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Men</a>
+      <a href="women.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Women</a>
+      <a href="running.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Running</a>
+      <a href="collections.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Collections</a>
+      <a href="stories.html" class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Stories</a>
+    </div>
+  </div>
+
+  <div id="cart-overlay" class="overlay"></div>
+  <div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping bag">
+    <div class="px-6 py-6 border-b border-white/10 flex justify-between items-center">
+      <h2 class="font-anton tracking-wider text-xl">YOUR BAG (<span id="cart-count-header">0</span>)</h2>
+      <button id="close-cart" aria-label="Close cart" class="text-white/60 hover:text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto cart-scroll p-6 flex flex-col gap-6">
+      <div id="cart-empty" class="flex flex-col items-center justify-center h-full text-center opacity-50">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="mb-4"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <p class="font-satoshi mb-1">Your bag is empty</p>
+        <p class="font-satoshi text-sm text-white/50">Add something worth hunting for.</p>
+      </div>
+    </div>
+    <div class="p-6 border-t border-white/10 bg-[#0A0A0A]">
+      <div class="flex justify-between font-satoshi mb-6">
+        <span class="text-white/70">Subtotal</span>
+        <span id="cart-subtotal" class="font-oswald font-bold tracking-wide">₹0</span>
+      </div>
+      <button onclick="alert('Checkout coming soon!')" class="w-full btn-pill bg-brand-blue text-white hover:bg-brand-blue-mid">Checkout</button>
+    </div>
+  </div>
+
+  <div id="size-overlay" class="overlay" style="z-index:9150"></div>
+  <div id="size-sheet">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <h3 id="size-product-name" class="font-anton text-2xl tracking-wide uppercase"></h3>
+        <p id="size-product-color" class="font-satoshi text-sm text-white/60"></p>
+      </div>
+      <button id="close-size" aria-label="Close size sheet" class="text-white/60 hover:text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <p class="font-oswald text-[10px] tracking-[0.2em] text-brand-blue mb-4 uppercase font-bold">Select UK Size</p>
+    <div id="size-grid" class="grid grid-cols-4 gap-2 mb-8"></div>
+    <button id="confirm-size-btn" class="w-full btn-pill bg-white text-text-primary disabled:opacity-30 disabled:pointer-events-none" disabled>Add to Bag</button>
+  </div>
+
+  <div id="search-overlay" class="overlay"></div>
+  <div id="search-panel" role="dialog" aria-modal="true">
+    <div class="flex items-center gap-4 max-w-4xl mx-auto border-b-[1.5px] border-white/15 pb-4 relative">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/50"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="search-input" placeholder="SEARCH FOR SPEED..." class="bg-transparent border-none outline-none text-[clamp(24px,4vw,44px)] font-anton uppercase w-full text-white placeholder-white/20">
+      <button id="close-search" class="absolute right-0 text-white/50 hover:text-white"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div id="search-results" class="max-w-4xl mx-auto mt-8 flex flex-wrap gap-4"></div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main id="main-content" class="opacity-0 transition-opacity duration-500 pt-[120px] pb-20 bg-white min-h-screen">
+    <section class="px-[5vw] py-20 text-center bg-[#0A0A0A] -mt-[120px] pt-[200px] pb-32">
+      <p class="font-oswald text-[10px] text-brand-blue uppercase tracking-[0.2em] mb-4 font-bold">DAILY PERFORMANCE</p>
+      <h1 class="font-anton text-[clamp(48px,8vw,96px)] text-white uppercase leading-[0.9]">ESSENTIALS<br/>CORE</h1>
+    </section>
+
+    <section class="bg-hairline flex flex-wrap gap-[2px]">
+      <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+        <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
+          <img src="./images/shoe_detailed.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="AERO-WEAVE STRATUS" onerror="this.outerHTML='<div class=\'shoe-fallback\'>AERO-WEAVE STRATUS</div>'">
+        </div>
+        <div class="pb-7 pt-7 px-7 relative">
+          <p class="font-oswald text-[10px] text-brand-blue tracking-[0.18em] uppercase mb-2">RUNNING - DAILY ESSENTIALS</p>
+          <h3 class="font-satoshi font-bold text-[19px] text-text-primary mb-1 uppercase">AERO-WEAVE STRATUS</h3>
+          <p class="font-satoshi text-[13px] text-text-muted mb-6">Obsidian Black / Copper</p>
+          <div class="flex justify-between items-center">
+            <span class="font-oswald font-bold text-[22px]">₹15,999</span>
+            <button class="add-to-cart-btn btn-pill border border-hairline text-text-primary hover:border-brand-blue hover:text-brand-blue !py-[10px] !px-5" data-product-id="stratus">+ ADD</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+        <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
+          <img src="./images/shoe_velocity.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="VELOCITY KINETIC" onerror="this.outerHTML='<div class=\'shoe-fallback\'>VELOCITY KINETIC</div>'">
+        </div>
+        <div class="pb-7 pt-7 px-7 relative">
+          <p class="font-oswald text-[10px] text-brand-blue tracking-[0.18em] uppercase mb-2">RUNNING - DAILY ESSENTIALS</p>
+          <h3 class="font-satoshi font-bold text-[19px] text-text-primary mb-1 uppercase">VELOCITY KINETIC</h3>
+          <p class="font-satoshi text-[13px] text-text-muted mb-6">Pure White / Chrome</p>
+          <div class="flex justify-between items-center">
+            <span class="font-oswald font-bold text-[22px]">₹14,999</span>
+            <button class="add-to-cart-btn btn-pill border border-hairline text-text-primary hover:border-brand-blue hover:text-brand-blue !py-[10px] !px-5" data-product-id="velocity">+ ADD</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
+        <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
+          <img src="./images/shoe_eclipse.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="CRIMSON ECLIPSE SHIFT" onerror="this.outerHTML='<div class=\'shoe-fallback\'>CRIMSON ECLIPSE SHIFT</div>'">
+        </div>
+        <div class="pb-7 pt-7 px-7 relative">
+          <p class="font-oswald text-[10px] text-brand-blue tracking-[0.18em] uppercase mb-2">RUNNING - DAILY ESSENTIALS</p>
+          <h3 class="font-satoshi font-bold text-[19px] text-text-primary mb-1 uppercase">CRIMSON ECLIPSE SHIFT</h3>
+          <p class="font-satoshi text-[13px] text-text-muted mb-6">Crimson Red / Gunmetal</p>
+          <div class="flex justify-between items-center">
+            <span class="font-oswald font-bold text-[22px]">₹16,999</span>
+            <button class="add-to-cart-btn btn-pill border border-hairline text-text-primary hover:border-brand-blue hover:text-brand-blue !py-[10px] !px-5" data-product-id="eclipse">+ ADD</button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="bg-[#0A0A0A] overflow-hidden">
+    <div class="border-t border-[#1C1C1C] px-[5vw]" style="padding-top: clamp(72px, 10vw, 140px);">
+      <p class="font-oswald text-[10px] text-brand-blue uppercase tracking-[0.22em] font-bold mb-6">OUTRUN THE WILD — SINCE 1948</p>
+      <h2 class="font-anton text-[clamp(52px,10vw,148px)] text-white uppercase leading-[0.88]">MADE<br/>FOR THE<br/>HUNT.</h2>
+    </div>
+
+    <div class="px-[5vw]" style="padding-top: clamp(60px, 7vw, 96px); margin-bottom: 64px;">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+        <div>
+          <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Shop</h4>
+          <ul class="space-y-3">
+            <li><a href="men.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Men</a></li>
+            <li><a href="women.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Women</a></li>
+            <li><a href="running.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Running</a></li>
+            <li><a href="collections.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Collections</a></li>
+            <li><a href="stories.html" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Stories</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Company</h4>
+          <ul class="space-y-3">
+            <li><a href="javascript:void(0)" onclick="alert('Company history and profile coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">About WHITE FOX</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Careers portal coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Careers</a></li>
+            <li><a href="index.html#sustainability" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Sustainability</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Press Room coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Press Room</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Investor relations coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Investors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Support</h4>
+          <ul class="space-y-3">
+            <li><a href="javascript:void(0)" onclick="alert('Order tracking portal coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Track Order</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Returns portal coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Returns & Exchanges</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Size guide coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Size Guide</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Contact form coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Contact Us</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('FAQ section coming soon.')" class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREDATOR PROTOCOL MARK -->
+    <div class="px-[5vw] pb-10 border-t border-[#111] pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div>
+        <p class="font-oswald text-[11px] tracking-[0.25em] text-white/30 uppercase mb-2 font-bold">PREDATOR PROTOCOL — SYSTEM STATUS: ACTIVE</p>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+            <span class="font-satoshi text-[11px] tracking-wider text-white/40 uppercase">Secure Core Connected</span>
+          </div>
+          <span class="text-white/20">|</span>
+          <p class="font-satoshi text-[11px] tracking-wider text-white/40 uppercase">Clinical Execution Layer</p>
+        </div>
+      </div>
+      <p class="font-satoshi text-[10px] text-white/30 uppercase tracking-[0.12em]">&copy; 2026 WHITE FOX CO. ALL RIGHTS RESERVED.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // 1. Preloader Fadeout
+      window.addEventListener('load', () => {
+        const p = document.getElementById('preloader');
+        if (p) {
+          p.style.opacity = '0';
+          setTimeout(() => p.style.display = 'none', 500);
+        }
+        document.getElementById('main-content').classList.remove('opacity-0');
+      });
+
+      // Simple Timeout for local server/static
+      setTimeout(() => {
+        const p = document.getElementById('preloader');
+        if (p && p.style.opacity !== '0') {
+          p.style.opacity = '0';
+          setTimeout(() => p.style.display = 'none', 500);
+          document.getElementById('main-content').classList.remove('opacity-0');
+        }
+      }, 1000);
+
+      // 2. Data & Products
+      const PRODUCTS = {
+        'stratus': { id: 'stratus', name: 'AERO-WEAVE STRATUS', color: 'Obsidian Black / Copper', price: 15999, img: './images/shoe_detailed.jpg' },
+        'velocity': { id: 'velocity', name: 'VELOCITY KINETIC', color: 'Pure White / Chrome', price: 14999, img: './images/shoe_velocity.jpg' },
+        'eclipse': { id: 'eclipse', name: 'CRIMSON ECLIPSE SHIFT', color: 'Crimson Red / Gunmetal', price: 16999, img: './images/shoe_eclipse.jpg' }
+      };
+      const SIZES = ['UK 5','UK 6','UK 7','UK 8','UK 9','UK 10','UK 11','UK 12'];
+      let cart = [];
+      let pendingProductId = null;
+      let selectedSize = null;
+
+      // 3. UI Elements
+      const nav = document.getElementById('sticky-nav');
+      const hamburger = document.getElementById('hamburger');
+      const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+      const cartBtn = document.getElementById('cart-btn');
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartOverlay = document.getElementById('cart-overlay');
+      const closeCartBtn = document.getElementById('close-cart');
+      const sizeSheet = document.getElementById('size-sheet');
+      const sizeOverlay = document.getElementById('size-overlay');
+      const closeSizeBtn = document.getElementById('close-size');
+      const searchBtn = document.getElementById('search-btn');
+      const searchPanel = document.getElementById('search-panel');
+      const searchOverlay = document.getElementById('search-overlay');
+      const closeSearchBtn = document.getElementById('close-search');
+
+      // 4. Mobile Nav Toggle
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileNavOverlay.classList.toggle('translate-y-[-100%]');
+        document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
+        if(hamburger.classList.contains('active')) {
+          gsap.to('.mobile-link', { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+        } else {
+          gsap.set('.mobile-link', { opacity: 0, y: 32 });
+        }
+      });
+
+      // 5. Cart Logic
+      function formatPrice(num) { return '₹' + num.toLocaleString('en-IN'); }
+      
+      function renderCart() {
+        const cartItemsDiv = document.getElementById('cart-items');
+        const emptyDiv = document.getElementById('cart-empty');
+        if (cart.length === 0) {
+          cartItemsDiv.innerHTML = '';
+          cartItemsDiv.appendChild(emptyDiv);
+          document.getElementById('cart-count').innerText = '0';
+          document.getElementById('cart-count-header').innerText = '0';
+          document.getElementById('cart-subtotal').innerText = formatPrice(0);
+        } else {
+          emptyDiv.remove();
+          cartItemsDiv.innerHTML = cart.map((item, index) => `
+            <div class="flex items-center gap-4 bg-white/5 p-3 rounded">
+              <div class="w-16 h-16 bg-[#111] p-1 flex items-center justify-center shrink-0">
+                <img src="${item.img}" class="w-[85%] object-contain" onerror="this.style.display='none'">
+              </div>
+              <div class="flex-1">
+                <h4 class="font-anton text-sm tracking-wide uppercase leading-tight mb-1">${item.name}</h4>
+                <p class="font-satoshi text-[11px] text-white/50 uppercase mb-2">SIZE: ${item.size} · ${item.color}</p>
+                <div class="flex justify-between items-center">
+                  <span class="font-oswald text-sm font-bold">${formatPrice(item.price)}</span>
+                  <button onclick="window.removeCartItem(${index})" class="font-satoshi text-[10px] text-white/30 hover:text-brand-blue uppercase tracking-wider">Remove</button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+          
+          let subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+          document.getElementById('cart-subtotal').innerText = formatPrice(subtotal);
+          document.getElementById('cart-count').innerText = cart.length;
+          document.getElementById('cart-count-header').innerText = cart.length;
+        }
+      }
+
+      window.addToCart = function(id, size) {
+        const p = PRODUCTS[id];
+        if(p) {
+          cart.push({ ...p, size: size });
+          renderCart();
+          openCart();
+        }
+      };
+
+      window.removeCartItem = function(index) {
+        cart.splice(index, 1);
+        renderCart();
+      };
+
+      const openCart = () => { cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); document.body.style.overflow='hidden'; };
+      const closeCart = () => { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); if(!sizeSheet.classList.contains('open')) document.body.style.overflow=''; };
+      cartBtn.addEventListener('click', openCart);
+      closeCartBtn.addEventListener('click', closeCart);
+      cartOverlay.addEventListener('click', closeCart);
+
+      // 6. Sizes Selection
+      window.openSizeSheet = (id) => {
+        const p = PRODUCTS[id];
+        if(!p) return;
+        pendingProductId = id;
+        document.getElementById('size-product-name').innerText = p.name;
+        document.getElementById('size-product-color').innerText = p.color;
+        
+        const grid = document.getElementById('size-grid');
+        grid.innerHTML = SIZES.map(s => `
+          <button class="size-btn border border-white/10 hover:border-brand-blue py-3 font-oswald text-xs tracking-wider uppercase transition-colors" data-size="${s}">${s}</button>
+        `).join('');
+        
+        document.querySelectorAll('.size-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('bg-brand-blue', 'border-brand-blue'));
+            this.classList.add('bg-brand-blue', 'border-brand-blue');
+            selectedSize = this.dataset.size;
+            document.getElementById('confirm-size-btn').disabled = false;
+          });
+        });
+        document.getElementById('confirm-size-btn').disabled = true;
+        sizeSheet.classList.add('open'); sizeOverlay.classList.add('open'); document.body.style.overflow='hidden';
+      };
+      const closeSizeSheet = () => { sizeSheet.classList.remove('open'); sizeOverlay.classList.remove('open'); if(!cartDrawer.classList.contains('open')) document.body.style.overflow=''; };
+      
+      document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openSizeSheet(btn.dataset.productId); });
+      });
+      document.getElementById('confirm-size-btn').addEventListener('click', () => {
+        if(pendingProductId && selectedSize) { closeSizeSheet(); window.addToCart(pendingProductId, selectedSize); }
+      });
+      closeSizeBtn.addEventListener('click', closeSizeSheet);
+      sizeOverlay.addEventListener('click', closeSizeSheet);
+
+      // 7. Search Logic
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      const openSearch = () => { searchPanel.classList.add('open'); searchOverlay.classList.add('open'); document.body.style.overflow='hidden'; searchInput.focus(); };
+      const closeSearch = () => { searchPanel.classList.remove('open'); searchOverlay.classList.remove('open'); document.body.style.overflow=''; };
+      searchBtn.addEventListener('click', openSearch);
+      closeSearchBtn.addEventListener('click', closeSearch);
+      searchOverlay.addEventListener('click', closeSearch);
+      
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        if(!query) { searchResults.innerHTML = ''; return; }
+        const matched = Object.values(PRODUCTS).filter(p => p.name.toLowerCase().includes(query) || p.color.toLowerCase().includes(query));
+        searchResults.innerHTML = matched.map(p => `
+          <div class="flex items-center gap-4 bg-[#1A1A1A] p-3 w-[calc(50%-8px)] rounded hover:bg-[#222] cursor-pointer" onclick="document.getElementById('close-search').click(); window.openSizeSheet('${p.id}')">
+            <div class="w-[52px] h-[52px] bg-[#0A0A0A] flex items-center justify-center shrink-0"><img src="${p.img}" class="w-[80%]" onerror="this.style.display='none'"></div>
+            <div class="flex-1">
+              <h4 class="font-satoshi font-bold text-[14px] leading-tight mb-1">${p.name}</h4>
+              <p class="font-satoshi text-[12px] text-white/50">${p.color}</p>
+            </div>
+            <span class="font-oswald text-[10px] text-brand-blue font-bold tracking-widest uppercase px-3">+ ADD</span>
+          </div>
+        `).join('');
+      });
+
+      // Escape key global
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { closeCart(); closeSizeSheet(); closeSearch(); hamburger.classList.remove('active'); mobileNavOverlay.classList.add('translate-y-[-100%]'); }
+      });
+
+      // 8. GSAP Animations & Navigation Scroll Effect
+      gsap.registerPlugin(ScrollTrigger);
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Make nav visible immediately on subpages, then toggle on scroll
+      nav.classList.add('visible');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          nav.classList.add('scrolled-far');
+        } else {
+          nav.classList.remove('scrolled-far');
+        }
+      });
+
+      if (!isReduced) {
+        if (document.querySelector('.product-card')) {
+          gsap.from('.product-card', {
+            opacity: 0,
+            y: 40,
+            stagger: 0.14,
+            duration: 0.6,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.product-card',
+              start: 'top 85%'
+            }
+          });
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
