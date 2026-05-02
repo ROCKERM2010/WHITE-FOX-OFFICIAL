@@ -1471,7 +1471,7 @@
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
-            <a href="#technical-breakdown" class="font-oswald text-[12px] text-white/40 hover:text-white tracking-[0.3em] uppercase transition-colors border-b border-white/10 pb-1">
+            <a href="#technical-breakdown" onclick="event.preventDefault(); window.scrollToSection('#technical-breakdown')" class="font-oswald text-[12px] text-white/40 hover:text-white tracking-[0.3em] uppercase transition-colors border-b border-white/10 pb-1">
               DISSECT TECHNOLOGY →
             </a>
           </div>
@@ -2134,6 +2134,12 @@
           touchMultiplier: 2,
           infinite: false,
         });
+
+        window.scrollToSection = (selector) => {
+          if (typeof lenis !== 'undefined' && lenis.scrollTo) {
+            lenis.scrollTo(selector);
+          }
+        };
 
         function raf(time) {
           lenis.raf(time);
