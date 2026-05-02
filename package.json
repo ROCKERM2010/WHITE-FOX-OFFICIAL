@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "White Fox Marketing Page",
   "scripts": {
-    "dev": "npx serve .",
-    "start": "npx serve ."
+    "dev": "npx serve public",
+    "start": "npx serve public"
   },
   "keywords": [],
   "author": "",
