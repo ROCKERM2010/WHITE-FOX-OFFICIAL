@@ -411,6 +411,10 @@
       };
       const SIZES = ['UK 5','UK 6','UK 7','UK 8','UK 9','UK 10','UK 11','UK 12'];
       let cart = [];
+      try {
+        const savedCart = localStorage.getItem('white_fox_cart');
+        if (savedCart) cart = JSON.parse(savedCart);
+      } catch (e) {}
       let pendingProductId = null;
       let selectedSize = null;
 
@@ -446,6 +450,9 @@
       function formatPrice(num) { return '₹' + num.toLocaleString('en-IN'); }
       
       function renderCart() {
+        try {
+          localStorage.setItem('white_fox_cart', JSON.stringify(cart));
+        } catch (e) {}
         const cartItemsDiv = document.getElementById('cart-items');
         const emptyDiv = document.getElementById('cart-empty');
         if (cart.length === 0) {
@@ -592,6 +599,11 @@
             }
           });
         }
+      }
+      if (typeof renderCart === 'function') {
+        try {
+          renderCart();
+        } catch (e) {}
       }
     })();
   </script>
