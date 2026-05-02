@@ -264,14 +264,16 @@
 
   <main id="main-content" class="opacity-0 transition-opacity duration-500 pt-[120px] pb-20 bg-white min-h-screen">
 
-  <section class="px-[5vw] py-20 text-center bg-[#0A0A0A] -mt-[120px] pt-[200px] pb-32 relative overflow-hidden" style="background-image: url('./images/men_hunt_bg.png'); background-size: cover; background-position: center;">
+  <section class="px-[5vw] py-20 bg-[#0A0A0A] -mt-[120px] pt-[200px] pb-32 relative overflow-hidden min-h-[550px] flex items-center justify-start" style="background-image: url('./images/men_hunt_bg.png'); background-size: cover; background-position: center;">
     <div class="absolute inset-0 bg-black/60 z-0"></div>
-    <div class="relative z-10">
+    <div class="relative z-10 max-w-3xl text-left">
       <p class="font-oswald text-[11px] text-brand-blue uppercase tracking-[0.25em] mb-4 font-bold">MEN'S COLLECTION</p>
-      <h1 class="font-anton text-[clamp(48px,8vw,96px)] text-white uppercase leading-[0.9] tracking-wide">BUILT FOR<br/>THE HUNT.</h1>
+      <h1 class="font-anton text-[clamp(48px,8vw,96px)] text-white uppercase leading-[0.9] tracking-wide mb-6">BUILT FOR<br/>THE HUNT.</h1>
+      <p class="font-satoshi text-[16px] text-white/80 leading-[1.6] max-w-[550px] mb-8">Performance running shoes and training gear engineered for athletes who demand more from every session.</p>
+      <a href="#product-grid" class="btn-pill inline-block bg-[#1E5624] text-white hover:bg-[#153e1a] tracking-wide font-bold transition-all px-8 py-3.5">SHOP MEN'S →</a>
     </div>
   </section>
-  <section class="bg-hairline flex flex-wrap gap-[2px]">
+  <section id="product-grid" class="bg-hairline flex flex-wrap gap-[2px]">
       <article class="product-card bg-white w-full md:w-[calc(50%-1px)] lg:w-[calc(33.333%-1.33px)] group">
         <div class="h-[340px] bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
           <img src="./images/shoe_eclipse.jpg" class="w-[70%] group-hover:scale-[1.06] transition-transform duration-[400ms]" alt="CRIMSON ECLIPSE SHIFT" onerror="this.outerHTML='<div class=\'shoe-fallback\'>CRIMSON ECLIPSE SHIFT</div>'">
