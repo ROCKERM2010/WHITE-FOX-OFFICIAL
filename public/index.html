@@ -823,7 +823,7 @@
           Designed for the concrete jungle. A brutalist fusion of heavy-duty industrial durability and high-performance cushioning. Built for those who build the future.
         </p>
         <div class="flex flex-wrap gap-4 mb-8">
-          <a href="#product-grid" class="btn-pill bg-section-dark text-white hover:bg-black">Shop Now</a>
+          <button onclick="window.openSizeSheet('steel')" class="btn-pill bg-section-dark text-white hover:bg-black cursor-pointer">Shop Now</button>
           <a href="#product-grid"
             class="btn-pill border border-hairline text-text-primary hover:border-brand-blue hover:text-brand-blue">Learn
             More</a>
@@ -2500,7 +2500,7 @@
         closeCartBtn.addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
 
-        const openSizeSheet = (productId) => {
+        window.openSizeSheet = (productId) => {
           pendingProductId = productId; selectedSize = null;
           const prod = PRODUCTS[productId];
           document.getElementById('size-product-name').innerText = prod.name;
