@@ -133,7 +133,7 @@
 
   <!-- Preloader -->
   <div id="preloader" class="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center transition-opacity duration-500" role="status" aria-label="Loading">
-    <img src="./assets/arctic-fox-logo-png-26.webp" alt="WHITE FOX" class="w-[120px] opacity-0" id="preloader-logo" style="animation: logoFadeIn 600ms 200ms forwards;" onerror="this.style.display='none'; document.getElementById('preloader-text-fallback').style.display='block';">
+    <img src="./images/white_fox_logo.png" alt="WHITE FOX" class="w-[120px] opacity-0" id="preloader-logo" style="animation: logoFadeIn 600ms 200ms forwards;" onerror="this.style.display='none'; document.getElementById('preloader-text-fallback').style.display='block';">
     <div style="display:none; animation: logoFadeIn 600ms 200ms forwards;" class="font-anton text-4xl tracking-widest text-brand-blue mb-4 opacity-0" id="preloader-text-fallback">WHITE FOX</div>
     <div class="mt-8 bg-gray-200 h-[2px] w-[240px] relative overflow-hidden">
       <div id="loading-bar" class="absolute left-0 top-0 h-full bg-brand-blue w-0" style="animation: loadBar 1000ms 400ms forwards;"></div>
@@ -151,7 +151,7 @@
   <nav id="sticky-nav" class="glass" role="navigation" aria-label="Main navigation">
     <div class="flex items-center justify-between h-[52px] md:h-[58px] px-5 md:px-7">
       <a href="index.html" aria-label="Home" class="flex items-center">
-        <img id="nav-logo-img" src="./assets/arctic-fox-logo-png-26.webp" alt="WHITE FOX" class="h-[32px] md:h-[36px] brightness-0 invert transition-all duration-300" onerror="this.style.display='none'; document.getElementById('nav-logo-text').style.display='block';">
+        <img id="nav-logo-img" src="./images/white_fox_logo.png" alt="WHITE FOX" class="h-[32px] md:h-[36px] brightness-0 invert transition-all duration-300" onerror="this.style.display='none'; document.getElementById('nav-logo-text').style.display='block';">
         <span id="nav-logo-text" class="font-anton text-2xl tracking-wider text-white hidden">WHITE FOX</span>
       </a>
       
@@ -688,133 +688,34 @@
         if (e.key === 'Escape') { closeCart(); closeSizeSheet(); closeSearch(); hamburger.classList.remove('active'); mobileNavOverlay.classList.add('translate-y-[-100%]'); }
       });
 
-      // 8. GSAP Animations
+      // 8. GSAP Animations & Navigation Scroll Effect
       gsap.registerPlugin(ScrollTrigger);
       const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Nav bar visibility logic
-      ScrollTrigger.create({
-        trigger: '#hero-canvas-section',
-        start: 'top top', end: 'bottom top',
-        onUpdate: (self) => {
-          if (self.progress > 0.3) nav.classList.add('visible');
-          if (self.progress >= 1) nav.classList.add('scrolled-far');
-          else nav.classList.remove('scrolled-far');
+      // Make nav visible immediately on subpages, then toggle on scroll
+      nav.classList.add('visible');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          nav.classList.add('scrolled-far');
+        } else {
+          nav.classList.remove('scrolled-far');
         }
       });
 
-      // Canvas scrubbing
-      const canvas = document.getElementById('hero-canvas');
-      const ctx = canvas.getContext('2d');
-      const frameCount = 173;
-      const images = [];
-      const heroObj = { frame: 0 };
-      let framesLoaded = 0;
-
-      const drawFrame = (n) => {
-        if (!images[n] || !images[n].complete || images[n].naturalWidth === 0) return;
-        const img = images[n];
-        // resize canvas
-        canvas.width = window.innerWidth * window.devicePixelRatio;
-        canvas.height = window.innerHeight * window.devicePixelRatio;
-        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
-        const x = (canvas.width / 2) - (img.width / 2) * scale;
-        const y = (canvas.height / 2) - (img.height / 2) * scale;
-        ctx.fillStyle = "#0A0A0A"; ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-      };
-
-      const preloadFrames = () => {
-        const MAX_CONCURRENT = 8;
-        let currentIndex = 1;
-
-        const loadNext = () => {
-          if (currentIndex > frameCount) return;
-          
-          const i = currentIndex++;
-          const img = new Image();
-          images[i - 1] = img;
-          const numStr = i.toString().padStart(3, '0');
-          
-          img.onload = function() {
-            framesLoaded++;
-            if (i === 1) drawFrame(0);
-            loadNext();
-          };
-          img.onerror = function() { 
-            framesLoaded++;
-            loadNext();
-          };
-          img.src = `./assets/frames/ezgif-frame-${numStr}.jpg`;
-        };
-
-        for (let b = 0; b < MAX_CONCURRENT; b++) {
-          loadNext();
-        }
-      };
-      
-      preloadFrames();
-      window.addEventListener('resize', () => drawFrame(Math.round(heroObj.frame)));
-
       if (!isReduced) {
-        // Hero Scrubbing
-        gsap.to(heroObj, {
-          frame: frameCount - 1,
-          snap: 'frame',
-          ease: 'none',
-          scrollTrigger: { trigger: '#hero-canvas-section', start: 'top 36px', end: 'bottom bottom', scrub: true },
-          onUpdate: () => drawFrame(Math.round(heroObj.frame))
-        });
-
-        // Hero Text Overlays
-        gsap.to('.hero-word', { opacity: 1, y: 0, ease: 'power3.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -20%', end: 'top -35%', scrub: true } });
-        gsap.to('.hero-word-right', { opacity: 1, y: 0, ease: 'power3.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -25%', end: 'top -40%', scrub: true } });
-        gsap.to('#hero-brand-label', { opacity: 1, ease: 'power1.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -45%', end: 'top -60%', scrub: true } });
-        gsap.to('#hero-speed-stat', { opacity: 1, ease: 'power1.out', scrollTrigger: { trigger: '#hero-canvas-section', start: 'top -45%', end: 'top -60%', scrub: true } });
-
-        // Content animations
-        gsap.to('.word', { opacity: 1, y: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#product-intro', start: 'top 60%' } });
-        gsap.from('.product-card', { opacity: 0, y: 40, stagger: 0.14, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: '#product-grid', start: 'top 75%' } });
-        
-        // Parallax
-        gsap.to('#forest-bg', { backgroundPositionY: '70%', ease: 'none', scrollTrigger: { trigger: '#forest-section', start: 'top bottom', end: 'bottom top', scrub: true } });
-        gsap.from('#forest-content > *', { opacity: 0, y: 30, stagger: 0.15, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#forest-section', start: 'top 60%' } });
-        
-        gsap.from('#snarl-copy > div > *', { opacity: 0, x: 30, stagger: 0.1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#snarl-section', start: 'top 60%' } });
-        
-        gsap.to('#jungle-bg', { backgroundPositionY: '70%', ease: 'none', scrollTrigger: { trigger: '#jungle-section', start: 'top bottom', end: 'bottom top', scrub: true } });
-        gsap.from('#jungle-content > *', { opacity: 0, y: 30, stagger: 0.15, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#jungle-section', start: 'top 60%' } });
-
-        gsap.from('.essentials-card', { opacity: 0, y: 48, stagger: 0.18, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: '#essentials', start: 'top 70%' } });
-
-        // Counters
-        ScrollTrigger.create({
-          trigger: '#sustainability', start: 'top 80%', once: true,
-          onEnter: () => {
-            document.querySelectorAll('.counter').forEach(counter => {
-              const target = parseInt(counter.dataset.target);
-              const suffix = counter.dataset.suffix || '';
-              let start = 0;
-              const duration = 1400; const startTime = performance.now();
-              const update = (t) => {
-                const elapsed = t - startTime;
-                if(elapsed < duration) {
-                  // cubic ease-out
-                  const p = elapsed / duration; const ease = 1 - Math.pow(1 - p, 3);
-                  counter.innerText = Math.floor(ease * target) + suffix;
-                  requestAnimationFrame(update);
-                } else { counter.innerText = target + suffix; }
-              };
-              requestAnimationFrame(update);
-            });
-          }
-        });
-
-        gsap.from('#email-section > div > *', { opacity: 0, y: 24, stagger: 0.1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '#email-section', start: 'top 70%' } });
-      } else {
-        // Fallback for reduced motion
-        setTimeout(() => { nav.classList.add('visible'); drawFrame(0); document.querySelector('.hero-word').style.opacity = 1; document.querySelector('.hero-word').style.transform = 'none'; document.querySelector('.hero-word-right').style.opacity = 1; document.querySelector('.hero-word-right').style.transform = 'none'; }, 2000);
-        document.querySelectorAll('.word').forEach(w => { w.style.opacity = 1; w.style.transform = 'none'; });
+        if (document.querySelector('.product-card')) {
+          gsap.from('.product-card', {
+            opacity: 0,
+            y: 40,
+            stagger: 0.14,
+            duration: 0.6,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.product-card',
+              start: 'top 85%'
+            }
+          });
+        }
       }
     })();
   </script>
