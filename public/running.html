@@ -289,17 +289,58 @@
       </div>
     </div>
   </section>
+  <main id="main-content" class="opacity-0 transition-opacity duration-500 pb-20 bg-white min-h-screen">
 
-  <main id="main-content" class="opacity-0 transition-opacity duration-500 pt-[120px] pb-20 bg-white min-h-screen">
+    <!-- HERO SECTION: THE PURSUIT OF FAST -->
+    <section class="relative w-full min-h-[650px] md:min-h-[750px] flex items-center justify-center bg-cover bg-center overflow-hidden" style="background-image: url('./images/wild_fox_fast_1777894522681.png');">
+      <!-- Dark gradient overlays for readability and luxury -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-10"></div>
+      
+      <div class="relative z-20 max-w-[1200px] mx-auto px-6 md:px-12 py-32 flex flex-col items-center justify-center text-center text-white">
+        <span class="font-oswald text-[10px] md:text-[12px] text-brand-blue tracking-[0.4em] uppercase font-bold mb-6">WHITE FOX RUNNING</span>
+        <h1 class="font-anton text-[clamp(48px,7vw,110px)] uppercase leading-[0.9] tracking-tight mb-6">
+          THE PURSUIT<br>OF FAST.
+        </h1>
+        <p class="font-satoshi text-[clamp(14px,1.5vw,18px)] max-w-[640px] text-white/85 mb-10 leading-relaxed font-light italic">
+          Carbon plate technology. GLACIER™ Elite foam. 11 years of biomechanics research in every stride.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <a href="#product-grid" class="btn-pill bg-brand-blue text-white hover:bg-brand-blue-mid min-w-[180px]">RACE DAY SHOES</a>
+          <a href="#product-grid" class="btn-pill border border-white/30 text-white hover:bg-white/10 min-w-[180px]">TRAINING SHOES</a>
+        </div>
+      </div>
+    </section>
 
-  <section class="bg-[#0A0A0A] h-[56px] flex items-center overflow-hidden w-full border-b border-white/10 -mt-[120px] pt-[120px] box-content">
+    <!-- STATS BAR -->
+    <section class="bg-section-dark border-t border-b border-white/5 py-12 md:py-16 px-6 relative z-20">
+      <div class="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
+        <div class="flex flex-col items-center">
+          <span class="font-anton text-[42px] md:text-[56px] text-white leading-none mb-2">176g</span>
+          <span class="font-satoshi text-[11px] md:text-[12px] text-white/50 uppercase tracking-[0.15em]">Ultra-Light Weight</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-anton text-[42px] md:text-[56px] text-white leading-none mb-2">87%</span>
+          <span class="font-satoshi text-[11px] md:text-[12px] text-white/50 uppercase tracking-[0.15em]">Energy Return</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-anton text-[42px] md:text-[56px] text-white leading-none mb-2">8mm</span>
+          <span class="font-satoshi text-[11px] md:text-[12px] text-white/50 uppercase tracking-[0.15em]">Heel-to-Toe Drop</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-anton text-[42px] md:text-[56px] text-white leading-none mb-2">40+</span>
+          <span class="font-satoshi text-[11px] md:text-[12px] text-white/50 uppercase tracking-[0.15em]">Podium Finishes</span>
+        </div>
+      </div>
+    </section>
+
+  <section class="bg-[#0A0A0A] h-[56px] flex items-center overflow-hidden w-full border-b border-white/10 box-content">
     <div class="flex w-[200%] animate-[marquee_20s_linear_infinite] whitespace-nowrap text-white/80 font-satoshi text-[12px] uppercase tracking-[0.2em]">
       <span class="px-8">CARBON PLATE · GLACIER™ FOAM · 176G · 87% ENERGY RETURN · </span>
       <span class="px-8">CARBON PLATE · GLACIER™ FOAM · 176G · 87% ENERGY RETURN · </span>
       <span class="px-8">CARBON PLATE · GLACIER™ FOAM · 176G · 87% ENERGY RETURN · </span>
     </div>
   </section>
-  <section class="px-[5vw] py-20">
+  <section id="product-grid" class="px-[5vw] py-20">
     <h2 class="font-anton text-[48px] uppercase mb-8">Race Day</h2>
     <div class="bg-hairline flex flex-wrap gap-[2px]">
       <article class="product-card bg-white w-full md:w-[calc(50%-1px)] group">
