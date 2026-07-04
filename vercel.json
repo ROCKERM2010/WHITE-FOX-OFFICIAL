@@ -1,16 +1,1 @@
-{
-  "version": 2,
-  "cleanUrls": true,
-  "builds": [
-    {
-      "src": "devaegis.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "devaegis.js"
-    }
-  ]
-}
+{ "cleanUrls": true }
