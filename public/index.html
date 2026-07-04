@@ -472,6 +472,10 @@
       }
     }
   </style>
+    <script>
+      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 
 <body class="bg-white text-text-primary antialiased overflow-x-hidden">
@@ -504,21 +508,21 @@
   <!-- Navbar -->
   <nav id="sticky-nav" class="glass" role="navigation" aria-label="Main navigation">
     <div class="flex items-center justify-between h-[44px] md:h-[58px] px-4 md:px-7">
-      <a href="index.html" aria-label="Home" class="flex items-center gap-2 md:gap-3">
+      <a href="/" aria-label="Home" class="flex items-center gap-2 md:gap-3">
         <span id="nav-logo-text"
           class="font-anton text-xl md:text-2xl tracking-wider text-white transition-colors duration-300">WHITE FOX</span>
       </a>
 
       <div class="hidden lg:flex items-center gap-6">
-        <a href="men.html"
+        <a href="/men"
           class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Men</a>
-        <a href="women.html"
+        <a href="/women"
           class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Women</a>
-        <a href="running.html"
+        <a href="/running"
           class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Running</a>
-        <a href="collections.html"
+        <a href="/collections"
           class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Collections</a>
-        <a href="stories.html"
+        <a href="/stories"
           class="nav-link font-satoshi font-medium text-[12px] tracking-[0.14em] uppercase text-white transition-colors duration-300">Stories</a>
       </div>
 
@@ -560,15 +564,15 @@
       </svg>
     </button>
     <div class="flex flex-col gap-6 text-white">
-      <a href="men.html"
+      <a href="/men"
         class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Men</a>
-      <a href="women.html"
+      <a href="/women"
         class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Women</a>
-      <a href="running.html"
+      <a href="/running"
         class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Running</a>
-      <a href="collections.html"
+      <a href="/collections"
         class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Collections</a>
-      <a href="stories.html"
+      <a href="/stories"
         class="mobile-link font-anton text-5xl uppercase opacity-0 translate-y-8 transition-all duration-500">Stories</a>
     </div>
   </div>
@@ -1773,7 +1777,7 @@
           </p>
           <h2 class="font-anton text-[clamp(40px,5vw,64px)] text-text-primary uppercase leading-[0.9]">THE ESSENTIALS</h2>
         </div>
-        <a href="collections.html"
+        <a href="/collections"
           class="hidden md:block font-satoshi text-[13px] font-bold uppercase tracking-wider text-text-primary hover:text-brand-blue transition-colors border-b border-text-primary pb-1">View All →</a>
       </div>
 
@@ -2051,15 +2055,15 @@
         <div>
           <h4 class="font-satoshi font-medium text-[10px] text-[#3A3A3A] uppercase tracking-[0.18em] mb-6">Shop</h4>
           <ul class="space-y-3">
-            <li><a href="men.html"
+            <li><a href="/men"
                 class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Men</a></li>
-            <li><a href="women.html"
+            <li><a href="/women"
                 class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Women</a></li>
-            <li><a href="running.html"
+            <li><a href="/running"
                 class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Running</a></li>
-            <li><a href="collections.html"
+            <li><a href="/collections"
                 class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Collections</a></li>
-            <li><a href="stories.html"
+            <li><a href="/stories"
                 class="font-satoshi text-[13px] text-[#5A5A5A] hover:text-white transition-colors">Stories</a></li>
           </ul>
         </div>
@@ -2195,9 +2199,9 @@
     </div>
   </footer>
 
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
   <script>
       (function () {
@@ -2868,3 +2872,4 @@
 </body>
 
 </html>
+
