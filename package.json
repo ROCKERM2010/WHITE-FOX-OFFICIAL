@@ -1,12 +1,15 @@
 {
   "name": "white-fox",
   "version": "1.0.0",
-  "description": "White Fox Marketing Page",
+  "main": "copy_image.js",
   "scripts": {
-    "dev": "npx serve public",
-    "start": "npx serve public"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^4.3.2"
+  }
 }

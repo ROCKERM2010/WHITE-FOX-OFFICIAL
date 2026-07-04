@@ -11,30 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,400i&display=swap" rel="stylesheet">
   
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: { blue: '#113B5E', 'blue-mid': '#1A5A8C', pale: '#E4F0F5' },
-            text: { primary: '#0A0A0A', muted: '#6B6B6B', faint: '#ADADAD' },
-            section: { dark: '#0A0A0A' },
-            hairline: '#E5E5E5',
-          },
-          fontFamily: {
-            anton: ['Anton', 'sans-serif'],
-            satoshi: ['Satoshi', 'sans-serif'],
-            oswald: ['Oswald', 'sans-serif'],
-            cormorant: ['"Cormorant Garamond"', 'serif'],
-          },
-          transitionTimingFunction: {
-            spring: 'cubic-bezier(0.16,1,0.3,1)',
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="./css/styles.css">
 
   <style>
     :root {
@@ -210,7 +187,7 @@
       <h2 class="font-anton tracking-wider text-xl">YOUR BAG (<span id="cart-count-header">0</span>)</h2>
       <button id="close-cart" aria-label="Close cart" class="text-white/60 hover:text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
-    <div id="cart-items" class="flex-1 overflow-y-auto cart-scroll p-6 flex flex-col gap-6">
+    <div id="cart-items" data-lenis-prevent class="flex-1 overflow-y-auto cart-scroll p-6 flex flex-col gap-6">
       <div id="cart-empty" class="flex flex-col items-center justify-center h-full text-center opacity-50">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="mb-4"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
         <p class="font-satoshi mb-1">Your bag is empty</p>
@@ -435,8 +412,8 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
     (function() {
@@ -647,7 +624,7 @@
         const matched = Object.values(PRODUCTS).filter(p => p.name.toLowerCase().includes(query) || p.color.toLowerCase().includes(query));
         searchResults.innerHTML = matched.map(p => `
           <div class="flex items-center gap-4 bg-[#1A1A1A] p-3 w-[calc(50%-8px)] rounded hover:bg-[#222] cursor-pointer" onclick="document.getElementById('close-search').click(); window.openSizeSheet('${p.id}')">
-            <div class="w-[52px] h-[52px] bg-[#0A0A0A] flex items-center justify-center shrink-0"><img src="${p.img}" class="w-[80%]" onerror="this.style.display='none'"></div>
+            <div class="w-[52px] h-[52px] bg-[#0A0A0A] flex items-center justify-center shrink-0"><img loading="lazy" src="${p.img}" class="w-[80%]" onerror="this.style.display='none'"></div>
             <div class="flex-1">
               <h4 class="font-satoshi font-bold text-[14px] leading-tight mb-1">${p.name}</h4>
               <p class="font-satoshi text-[12px] text-white/50">${p.color}</p>
@@ -696,6 +673,161 @@
         } catch (e) {}
       }
     })();
+  </script>
+        <!-- AI Chatbot System -->
+  <style>
+    #WF_CHAT_TOGGLE {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #0A0A0A;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10000;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #WF_CHAT_TOGGLE:hover {
+      transform: scale(1.1) translateY(-4px);
+      border-color: rgba(255,255,255,0.4);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    #WF_CHAT_TOGGLE svg {
+      width: 26px;
+      height: 26px;
+      color: white;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #WF_CHAT_TOGGLE.active {
+      background: #113B5E;
+      border-color: rgba(255,255,255,0.3);
+    }
+    #WF_CHAT_TOGGLE.active svg {
+      transform: rotate(90deg) scale(0.8);
+    }
+    #WF_CHAT_TOOLTIP {
+      position: fixed;
+      bottom: 45px;
+      right: 105px;
+      background: #FFFFFF;
+      color: #0A0A0A;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: 'Satoshi', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(10px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 10001;
+    }
+    #WF_CHAT_TOGGLE:hover + #WF_CHAT_TOOLTIP {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    #WF_CHAT_TOGGLE.active + #WF_CHAT_TOOLTIP {
+      display: none;
+    }
+    #VG_OVERLAY_CONTAINER {
+      position: fixed;
+      bottom: 110px;
+      right: 30px;
+      width: 420px;
+      height: 620px;
+      max-height: calc(100vh - 160px);
+      max-width: calc(100vw - 60px);
+      background: #0A0A0A;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(30px) scale(0.9);
+      transform-origin: bottom right;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(20px);
+    }
+    #VG_OVERLAY_CONTAINER.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0) scale(1);
+    }
+    @media (max-width: 480px) {
+      #VG_OVERLAY_CONTAINER {
+        width: calc(100vw - 40px);
+        height: calc(100vh - 140px);
+        right: 20px;
+        bottom: 100px;
+      }
+      #WF_CHAT_TOGGLE {
+        bottom: 20px;
+        right: 20px;
+      }
+      #WF_CHAT_TOOLTIP {
+        display: none;
+      }
+    }
+  </style>
+
+  <div id="WF_CHAT_TOGGLE" aria-label="Open support chat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </div>
+  <div id="WF_CHAT_TOOLTIP">AI Support</div>
+
+  <div id="VG_OVERLAY_CONTAINER" data-lenis-prevent>
+    <!-- Chatbot renders here -->
+  </div>
+
+  <script defer>
+    (function() {
+        const toggle = document.getElementById('WF_CHAT_TOGGLE');
+        const container = document.getElementById('VG_OVERLAY_CONTAINER');
+        
+        toggle.addEventListener('click', () => {
+            const isOpen = container.classList.toggle('open');
+            toggle.classList.toggle('active');
+            
+            if (isOpen) {
+                toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+                if (!window.VG_INITIALIZED) {
+                    initializeChatbot();
+                }
+            } else {
+                toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+            }
+        });
+
+        function initializeChatbot() {
+            window.VG_CONFIG = {
+                ID: "H0LaGbfSARPoQxv5Mr1v",
+                region: 'na',
+                render: 'full-width',
+                stylesheets: [
+                    "https://cdn.convocore.ai/vg_live_build/styles.css",
+                ],
+            }
+            var VG_SCRIPT = document.createElement("script");
+            VG_SCRIPT.src = "https://cdn.convocore.ai/vg_live_build/vg_bundle.js";
+            VG_SCRIPT.defer = true;
+            document.body.appendChild(VG_SCRIPT);
+            window.VG_INITIALIZED = true;
+        }
+    })()
   </script>
 </body>
 </html>
