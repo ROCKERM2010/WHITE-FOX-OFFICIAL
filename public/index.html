@@ -1418,19 +1418,18 @@
           width: 100%;
           max-width: 1200px;
         }
-        .custom-glass-border {
-          padding: 8px;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 24px;
-          box-shadow: 0 40px 100px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.1);
-          backdrop-filter: blur(20px);
-          transition: all 1s ease;
+        .custom-luxury-border {
+          padding: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(0, 0, 0, 0.4);
+          position: relative;
         }
-        .custom-pinnacle-frame:hover .custom-glass-border {
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          box-shadow: 0 50px 120px rgba(0,0,0,1), inset 0 1px 0 rgba(255,255,255,0.2);
+        .custom-luxury-border::after {
+          content: '';
+          position: absolute;
+          inset: 4px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          pointer-events: none;
         }
         .custom-vignette-radial {
           background: radial-gradient(ellipse at center, transparent 65%, #050505 100%);
@@ -1447,9 +1446,9 @@
           <!-- Award-Winning Glow Effect -->
           <div class="absolute inset-0 bg-brand-blue/20 blur-[100px] rounded-full group-hover:bg-brand-blue/30 transition-colors duration-1000 mix-blend-screen z-0 pointer-events-none"></div>
           
-          <!-- Ultra-Premium Gallery Frame -->
-          <div class="relative custom-glass-border">
-            <div class="relative rounded-[16px] overflow-hidden bg-[#050505]">
+          <!-- High-Fashion Editorial Frame -->
+          <div class="relative custom-luxury-border">
+            <div class="relative overflow-hidden bg-[#050505]">
               <!-- Professional Room Image -->
               <img src="./images/apex_pinnacle.jpg" 
                    alt="Arctic Fox Apex Elite" 
