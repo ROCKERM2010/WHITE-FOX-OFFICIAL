@@ -1413,17 +1413,32 @@
 
       <!-- Volumetric Light Beam -->
       <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-brand-blue/40 via-white/10 to-transparent z-0 opacity-50"></div>
-      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-full bg-brand-blue/5 blur-[120px] z-0"></div>
-
+      <style>
+        .custom-pinnacle-frame {
+          max-width: 850px;
+        }
+        .custom-glass-border {
+          padding: 1px;
+          background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.05), transparent);
+          box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        }
+        .custom-vignette-radial {
+          background: radial-gradient(ellipse at center, transparent 20%, #050505 100%);
+        }
+        .custom-vignette-linear {
+          background: linear-gradient(to top, #050505, rgba(5,5,5,0.6), transparent);
+        }
+      </style>
+      
       <div class="container mx-auto px-[5vw] relative z-10 flex flex-col items-center text-center">
         <p class="font-oswald text-[11px] text-brand-blue tracking-[0.5em] uppercase mb-12 font-bold opacity-0 translate-y-4 zenith-reveal">THE PINNACLE OF PERFORMANCE</p>
         
-        <div class="relative group mb-20 w-full max-w-[850px] mx-auto opacity-0 translate-y-8 zenith-shoe-reveal">
+        <div class="relative group mb-20 w-full custom-pinnacle-frame mx-auto opacity-0 translate-y-8 zenith-shoe-reveal">
           <!-- Award-Winning Glow Effect -->
           <div class="absolute inset-0 bg-brand-blue/20 blur-[100px] rounded-full group-hover:bg-brand-blue/40 transition-colors duration-1000 mix-blend-screen z-0 pointer-events-none"></div>
           
           <!-- Elegant Glassmorphic Frame -->
-          <div class="relative rounded-xl p-[1px] bg-gradient-to-b from-white/30 via-white/5 to-transparent shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden">
+          <div class="relative rounded-xl custom-glass-border overflow-hidden">
             <div class="relative rounded-xl overflow-hidden bg-[#050505]">
               <!-- Professional Room Image -->
               <img src="./images/apex_pinnacle.jpg" 
@@ -1431,8 +1446,8 @@
                    class="w-full h-auto object-cover relative z-10 transition-transform duration-[1500ms] ease-out group-hover:scale-[1.03]">
                    
               <!-- Vignette Blending Layer (Fades the image edges into the web background) -->
-              <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#050505_100%)] z-20 pointer-events-none opacity-100 transition-opacity duration-1000"></div>
-              <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent z-20 opacity-100 pointer-events-none"></div>
+              <div class="absolute inset-0 custom-vignette-radial z-20 pointer-events-none opacity-100 transition-opacity duration-1000"></div>
+              <div class="absolute inset-0 custom-vignette-linear z-20 opacity-100 pointer-events-none"></div>
                    
               <!-- Scanning HUD overlay on hover -->
               <div class="absolute inset-0 bg-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20 pointer-events-none mix-blend-screen"></div>
