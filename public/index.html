@@ -1419,32 +1419,19 @@
           max-width: 1200px;
         }
         .custom-glass-border {
-          padding: 1px;
-          background: linear-gradient(to bottom, rgba(26,90,140,0.5), rgba(26,90,140,0.1), transparent);
-          box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+          padding: 8px;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 24px;
+          box-shadow: 0 40px 100px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.1);
+          backdrop-filter: blur(20px);
+          transition: all 1s ease;
         }
-        .tactical-corner {
-          position: absolute;
-          width: 30px;
-          height: 30px;
-          border-color: #1A5A8C;
-          border-style: solid;
-          border-width: 0;
-          z-index: 30;
-          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-          pointer-events: none;
+        .custom-pinnacle-frame:hover .custom-glass-border {
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          box-shadow: 0 50px 120px rgba(0,0,0,1), inset 0 1px 0 rgba(255,255,255,0.2);
         }
-        .custom-pinnacle-frame:hover .tactical-corner {
-          width: 50px;
-          height: 50px;
-          border-color: #ffffff;
-          box-shadow: 0 0 15px rgba(255,255,255,0.2);
-        }
-        .tc-tl { top: -2px; left: -2px; border-top-width: 2px; border-left-width: 2px; }
-        .tc-tr { top: -2px; right: -2px; border-top-width: 2px; border-right-width: 2px; }
-        .tc-bl { bottom: -2px; left: -2px; border-bottom-width: 2px; border-left-width: 2px; }
-        .tc-br { bottom: -2px; right: -2px; border-bottom-width: 2px; border-right-width: 2px; }
-        
         .custom-vignette-radial {
           background: radial-gradient(ellipse at center, transparent 65%, #050505 100%);
         }
@@ -1458,17 +1445,11 @@
         
         <div class="relative group mb-20 w-full custom-pinnacle-frame mx-auto opacity-0 translate-y-8 zenith-shoe-reveal">
           <!-- Award-Winning Glow Effect -->
-          <div class="absolute inset-0 bg-brand-blue/20 blur-[100px] rounded-full group-hover:bg-brand-blue/40 transition-colors duration-1000 mix-blend-screen z-0 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-brand-blue/20 blur-[100px] rounded-full group-hover:bg-brand-blue/30 transition-colors duration-1000 mix-blend-screen z-0 pointer-events-none"></div>
           
-          <!-- Elegant Glassmorphic Frame -->
-          <div class="relative rounded-xl custom-glass-border">
-            <!-- Tactical Corner Accents -->
-            <div class="tactical-corner tc-tl"></div>
-            <div class="tactical-corner tc-tr"></div>
-            <div class="tactical-corner tc-bl"></div>
-            <div class="tactical-corner tc-br"></div>
-            
-            <div class="relative rounded-xl overflow-hidden bg-[#050505]">
+          <!-- Ultra-Premium Gallery Frame -->
+          <div class="relative custom-glass-border">
+            <div class="relative rounded-[16px] overflow-hidden bg-[#050505]">
               <!-- Professional Room Image -->
               <img src="./images/apex_pinnacle.jpg" 
                    alt="Arctic Fox Apex Elite" 
