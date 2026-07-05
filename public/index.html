@@ -2224,12 +2224,6 @@
           }
         };
 
-        function raf(time) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
         // Sync Lenis with GSAP
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => {
