@@ -1418,30 +1418,28 @@
       <div class="container mx-auto px-[5vw] relative z-10 flex flex-col items-center text-center">
         <p class="font-oswald text-[11px] text-brand-blue tracking-[0.5em] uppercase mb-12 font-bold opacity-0 translate-y-4 zenith-reveal">THE PINNACLE OF PERFORMANCE</p>
         
-        <div class="relative group mb-16 w-full max-w-[900px] mx-auto p-3 md:p-5 rounded-2xl bg-gradient-to-b from-white/10 to-transparent backdrop-blur-2xl border border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.8)] opacity-0 translate-y-8 zenith-shoe-reveal">
-          <!-- Award-Winning Glow Effect (moved behind the frame) -->
-          <div class="absolute inset-0 bg-brand-blue/10 blur-[80px] rounded-full group-hover:bg-brand-blue/30 transition-colors duration-1000 mix-blend-screen z-0 pointer-events-none"></div>
+        <div class="relative group mb-20 w-full max-w-[850px] mx-auto opacity-0 translate-y-8 zenith-shoe-reveal">
+          <!-- Award-Winning Glow Effect -->
+          <div class="absolute inset-0 bg-brand-blue/20 blur-[100px] rounded-full group-hover:bg-brand-blue/40 transition-colors duration-1000 mix-blend-screen z-0 pointer-events-none"></div>
           
-          <!-- Inner Frame for image -->
-          <div class="relative rounded-xl overflow-hidden border border-white/10 bg-[#050505] shadow-inner">
-            <!-- Professional Room Image -->
-            <img src="./images/apex_pinnacle.jpg" 
-                 alt="Arctic Fox Apex Elite" 
-                 class="w-full h-auto object-cover relative z-10 transition-transform duration-1000 group-hover:scale-105">
-                 
-            <!-- Elegant Corner Accents inside the frame -->
-            <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-brand-blue/40 z-30 transition-colors duration-700 group-hover:border-brand-blue"></div>
-            <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-brand-blue/40 z-30 transition-colors duration-700 group-hover:border-brand-blue"></div>
-            
-            <!-- Technical Overlay text -->
-            <div class="absolute bottom-4 left-6 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-oswald text-[10px] text-brand-blue tracking-[0.2em] uppercase">
-              SCANNING... // BIOMETRIC LOCK ENGAGED
+          <!-- Elegant Glassmorphic Frame -->
+          <div class="relative rounded-xl p-[1px] bg-gradient-to-b from-white/30 via-white/5 to-transparent shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden">
+            <div class="relative rounded-xl overflow-hidden bg-[#050505]">
+              <!-- Professional Room Image -->
+              <img src="./images/apex_pinnacle.jpg" 
+                   alt="Arctic Fox Apex Elite" 
+                   class="w-full h-auto object-cover relative z-10 transition-transform duration-[1500ms] ease-out group-hover:scale-[1.03]">
+                   
+              <!-- Scanning HUD overlay on hover -->
+              <div class="absolute inset-0 bg-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20 pointer-events-none mix-blend-screen"></div>
+              
+              <!-- Technical Text -->
+              <div class="absolute bottom-5 left-6 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 font-oswald text-[10px] text-white tracking-[0.3em] uppercase flex items-center gap-3">
+                <span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-pulse"></span>
+                SYSTEM ACTIVE // BIOMETRICS ENGAGED
+              </div>
             </div>
           </div>
-          
-          <!-- Tactical HUD Accents (External Frame) -->
-          <div class="absolute -top-4 -left-4 w-16 h-16 border-t-2 border-l-2 border-white/20 group-hover:border-brand-blue/60 transition-colors duration-700 rounded-tl-lg"></div>
-          <div class="absolute -bottom-4 -right-4 w-16 h-16 border-b-2 border-r-2 border-white/20 group-hover:border-brand-blue/60 transition-colors duration-700 rounded-br-lg"></div>
         </div>
 
         <div class="max-w-[1000px] mx-auto">
