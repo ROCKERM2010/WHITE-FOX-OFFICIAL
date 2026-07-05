@@ -1434,12 +1434,28 @@
           pointer-events: none;
         }
         .custom-cinematic-lines::before { 
-          top: 0; 
+          top: 0; left: 0; 
           background: linear-gradient(to bottom, #050505 20%, transparent 100%);
         }
         .custom-cinematic-lines::after { 
-          bottom: 0; 
+          bottom: 0; left: 0; 
           background: linear-gradient(to top, #050505 20%, transparent 100%);
+        }
+        .side-blend-left {
+          position: absolute;
+          top: 0; left: 0;
+          width: 15%; height: 100%;
+          background: linear-gradient(to right, #050505 20%, transparent 100%);
+          z-index: 25;
+          pointer-events: none;
+        }
+        .side-blend-right {
+          position: absolute;
+          top: 0; right: 0;
+          width: 15%; height: 100%;
+          background: linear-gradient(to left, #050505 20%, transparent 100%);
+          z-index: 25;
+          pointer-events: none;
         }
         .custom-vignette-radial {
           background: radial-gradient(ellipse at center, transparent 65%, #050505 100%);
@@ -1458,6 +1474,8 @@
           
           <!-- Cinematic Letterbox Lines -->
           <div class="relative custom-cinematic-lines">
+            <div class="side-blend-left"></div>
+            <div class="side-blend-right"></div>
             <div class="relative overflow-hidden bg-[#050505]">
               <!-- Professional Room Image -->
               <img src="./images/apex_pinnacle.jpg" 
