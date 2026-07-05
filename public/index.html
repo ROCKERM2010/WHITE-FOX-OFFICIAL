@@ -1432,20 +1432,25 @@
           margin-right: -50vw;
           box-shadow: 0 40px 100px rgba(0,0,0,1);
         }
-        /* Sharp Movie Theater Letterbox Bars */
+        /* Seamless Cinematic Edge Blend */
         .custom-cinematic-pro::before,
         .custom-cinematic-pro::after {
           content: '';
           position: absolute;
           left: 0;
           width: 100%;
-          height: 12%; 
-          background: #000000;
+          height: 25%; /* Taller height for an ultra-smooth fade */
           z-index: 25;
           pointer-events: none;
         }
-        .custom-cinematic-pro::before { top: 0; }
-        .custom-cinematic-pro::after { bottom: 0; }
+        .custom-cinematic-pro::before { 
+          top: -1px; /* Prevent sub-pixel rendering gaps */
+          background: linear-gradient(to bottom, #050505 10%, transparent 100%);
+        }
+        .custom-cinematic-pro::after { 
+          bottom: -1px; 
+          background: linear-gradient(to top, #050505 10%, transparent 100%);
+        }
       </style>
       
       <div class="container mx-auto px-[5vw] relative z-10 flex flex-col items-center text-center">
