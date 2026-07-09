@@ -483,13 +483,11 @@
     class="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center transition-opacity duration-500"
     role="status" aria-label="Loading">
     <div style="animation: logoFadeIn 600ms 200ms forwards;"
-      class="font-anton text-[40px] tracking-widest text-brand-blue mb-4 opacity-0" id="preloader-text-fallback">WHITE
-      FOX</div>
-    <div class="mt-8 bg-gray-200 h-[2px] w-[240px] relative overflow-hidden">
-      <div id="loading-bar" class="absolute left-0 top-0 h-full bg-brand-blue w-0"
-        style="animation: loadBar 1000ms 400ms forwards;"></div>
+      class="font-anton text-[40px] tracking-widest text-brand-blue mb-3 opacity-0" id="preloader-text-fallback">WHITE FOX</div>
+    <div class="w-[180px] h-[1.5px] relative overflow-hidden opacity-0" style="animation: logoFadeIn 600ms 400ms forwards; background-color: rgba(17, 59, 94, 0.1);">
+      <div id="loading-bar" class="absolute left-0 top-0 h-full bg-brand-blue w-0 transition-all duration-200"></div>
     </div>
-    <div id="loading-text" class="mt-4 font-satoshi text-[11px] text-text-faint uppercase tracking-[0.2em] opacity-0"
+    <div id="loading-text" class="mt-3 font-satoshi text-[10px] text-text-faint uppercase tracking-[0.2em] opacity-0"
       style="animation: logoFadeIn 600ms 600ms forwards;">Loading Experience</div>
   </div>
 
@@ -2330,8 +2328,8 @@
           const progress = (framesLoaded / frameCount) * 100;
           loadingBar.style.width = `${progress}%`;
           
-          // Show site as soon as the first frame loads to avoid 2 minute load time
-          if (framesLoaded >= 1 && !introPlayed) {
+          // Wait for all frames to load
+          if (framesLoaded === frameCount && !introPlayed) {
             introPlayed = true;
             setTimeout(() => {
               preloader.classList.add('opacity-0');
@@ -2346,7 +2344,7 @@
                 .fromTo('#hero-scroll-indicator', { y: 20, opacity: 0 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 1.2);
 
               setTimeout(() => preloader.style.display = 'none', 600);
-            }, 100);
+            }, 500); // give a little pause at 100%
           }
         };
 
