@@ -482,13 +482,13 @@
   <div id="preloader"
     class="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center transition-opacity duration-500"
     role="status" aria-label="Loading">
-    <div style="animation: logoFadeIn 600ms 200ms forwards;"
+    <div style="animation: logoFadeIn 600ms forwards;"
       class="font-anton text-[40px] tracking-widest text-brand-blue mb-3 opacity-0" id="preloader-text-fallback">WHITE FOX</div>
-    <div class="w-[180px] h-[1.5px] relative overflow-hidden opacity-0" style="animation: logoFadeIn 600ms 400ms forwards; background-color: rgba(17, 59, 94, 0.1);">
-      <div id="loading-bar" class="absolute left-0 top-0 h-full bg-brand-blue w-0 transition-all duration-200"></div>
+    <div class="w-[180px] h-[1.5px] relative overflow-hidden opacity-0" style="animation: logoFadeIn 600ms forwards; background-color: rgba(17, 59, 94, 0.1);">
+      <div id="loading-bar" class="absolute left-0 top-0 h-full bg-brand-blue w-0 transition-all duration-300 ease-out"></div>
     </div>
     <div id="loading-text" class="mt-3 font-satoshi text-[10px] text-text-faint uppercase tracking-[0.2em] opacity-0"
-      style="animation: logoFadeIn 600ms 600ms forwards;">Loading Experience</div>
+      style="animation: logoFadeIn 600ms forwards;">Loading Experience</div>
   </div>
 
   <!-- SVG Grain -->
@@ -2324,6 +2324,7 @@
         let introPlayed = false;
 
         // 3. Preload Logic with Progress
+        const preloaderStartTime = Date.now();
         const updateLoadingProgress = () => {
           const progress = (framesLoaded / frameCount) * 100;
           loadingBar.style.width = `${progress}%`;
@@ -2331,6 +2332,11 @@
           // Wait for all frames to load
           if (framesLoaded === frameCount && !introPlayed) {
             introPlayed = true;
+            
+            const elapsedTime = Date.now() - preloaderStartTime;
+            const minimumDisplayTime = 1500; // Force intro screen to show for at least 1.5s
+            const delayBeforeHiding = Math.max(0, minimumDisplayTime - elapsedTime) + 300; // Extra 300ms pause at 100%
+
             setTimeout(() => {
               preloader.classList.add('opacity-0');
               document.getElementById('main-content').classList.remove('opacity-0');
@@ -2344,7 +2350,7 @@
                 .fromTo('#hero-scroll-indicator', { y: 20, opacity: 0 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 1.2);
 
               setTimeout(() => preloader.style.display = 'none', 600);
-            }, 500); // give a little pause at 100%
+            }, delayBeforeHiding);
           }
         };
 
